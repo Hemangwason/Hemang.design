@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
-import Image from "next/image";
+import DeviceMockup from "./DeviceMockup";
 import type { Project } from "@/lib/projects";
 
 interface Props {
@@ -22,11 +22,13 @@ export default function ProjectModal({ project, onClose }: Props) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[100]"
             style={{
-              background: "rgba(10,10,10,0.55)",
-              backdropFilter: "blur(10px)",
-              WebkitBackdropFilter: "blur(10px)",
+              position: "fixed",
+              inset: 0,
+              zIndex: 100,
+              background: "rgba(10,10,10,0.6)",
+              backdropFilter: "blur(12px)",
+              WebkitBackdropFilter: "blur(12px)",
             }}
             onClick={onClose}
           />
@@ -34,101 +36,153 @@ export default function ProjectModal({ project, onClose }: Props) {
           {/* Panel */}
           <motion.div
             key="panel"
-            initial={{ opacity: 0, scale: 0.96, y: 20 }}
+            initial={{ opacity: 0, scale: 0.95, y: 24 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.96, y: 16 }}
-            transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed z-[101] glass rounded-3xl overflow-hidden"
+            exit={{ opacity: 0, scale: 0.95, y: 16 }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
             style={{
+              position: "fixed",
+              zIndex: 101,
               top: "5vh",
               bottom: "5vh",
               left: "50%",
               transform: "translateX(-50%)",
-              width: "min(560px, 92vw)",
+              width: "min(540px, 92vw)",
+              borderRadius: 24,
+              overflow: "hidden",
+              background: `linear-gradient(145deg, ${project.gradient[0]}ee, ${project.gradient[1]}ee)`,
+              boxShadow: "0 32px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.1)",
             }}
           >
-            <div className="h-full overflow-y-auto">
-              {/* Image header */}
-              <div className="relative" style={{ height: 260 }}>
-                <Image
-                  src={project.imageSrc}
-                  alt={project.name}
-                  fill
-                  className="object-cover object-top"
-                  sizes="560px"
-                />
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    background:
-                      "linear-gradient(to bottom, transparent 40%, rgba(255,255,255,0.95) 100%)",
-                  }}
+            <div style={{ height: "100%", overflowY: "auto" }}>
+              {/* Hero area with device */}
+              <div
+                style={{
+                  position: "relative",
+                  padding: "36px 32px 20px",
+                  display: "flex",
+                  justifyContent: "center",
+                  minHeight: 220,
+                  alignItems: "center",
+                }}
+              >
+                <DeviceMockup
+                  device={project.device}
+                  gradient={project.gradient}
+                  videoSrc={project.videoSrc}
                 />
 
                 {/* Close button */}
                 <button
                   onClick={onClose}
-                  className="absolute top-4 right-4 glass w-9 h-9 rounded-full flex items-center justify-center hover:scale-105 transition-transform"
+                  className="glass"
+                  style={{
+                    position: "absolute",
+                    top: 16,
+                    right: 16,
+                    width: 36,
+                    height: 36,
+                    borderRadius: "50%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    cursor: "pointer",
+                    color: "rgba(255,255,255,0.7)",
+                  }}
                   aria-label="Close"
                 >
-                  <X size={15} strokeWidth={2} />
+                  <X size={14} strokeWidth={2} />
                 </button>
               </div>
 
               {/* Content */}
-              <div className="px-8 pb-10 -mt-4">
+              <div
+                style={{
+                  background: "rgba(0,0,0,0.35)",
+                  backdropFilter: "blur(24px)",
+                  WebkitBackdropFilter: "blur(24px)",
+                  borderTop: "1px solid rgba(255,255,255,0.08)",
+                  padding: "24px 28px 32px",
+                }}
+              >
                 <p
-                  className="text-[11px] tracking-widest uppercase mb-2"
-                  style={{ color: "var(--text-3)" }}
+                  style={{
+                    fontSize: 10,
+                    letterSpacing: "0.14em",
+                    textTransform: "uppercase",
+                    color: "rgba(255,255,255,0.35)",
+                    marginBottom: 8,
+                  }}
                 >
-                  {project.year} &nbsp;·&nbsp; {project.status}
+                  {project.year}&nbsp;&nbsp;·&nbsp;&nbsp;{project.status}
+                  {project.company && (
+                    <span style={{ marginLeft: 6 }}>/ {project.company}</span>
+                  )}
                 </p>
 
                 <h2
-                  className="font-poppins font-bold leading-tight mb-2"
-                  style={{ fontSize: "1.75rem", color: "var(--text)" }}
+                  className="font-poppins"
+                  style={{
+                    fontWeight: 700,
+                    fontSize: "1.75rem",
+                    lineHeight: 1.15,
+                    color: "#fff",
+                    letterSpacing: "-0.02em",
+                    marginBottom: 6,
+                  }}
                 >
                   {project.name}
                 </h2>
 
-                <p
-                  className="text-[13px] mb-6"
-                  style={{ color: "var(--text-2)" }}
-                >
+                <p style={{ fontSize: 13, color: "rgba(255,255,255,0.5)", marginBottom: 20 }}>
                   {project.tagline}
                 </p>
 
                 <div
-                  className="h-px mb-6"
-                  style={{ background: "rgba(0,0,0,0.08)" }}
+                  style={{
+                    height: 1,
+                    background: "rgba(255,255,255,0.08)",
+                    marginBottom: 20,
+                  }}
                 />
 
                 <p
-                  className="text-[13px] leading-[1.85] mb-8"
-                  style={{ color: "var(--text-2)" }}
+                  style={{
+                    fontSize: 13,
+                    lineHeight: 1.85,
+                    color: "rgba(255,255,255,0.6)",
+                    marginBottom: 24,
+                  }}
                 >
                   {project.description}
                 </p>
 
-                {/* Tech tags */}
-                <div>
-                  <p
-                    className="text-[11px] tracking-widest uppercase mb-3"
-                    style={{ color: "var(--text-3)" }}
-                  >
-                    Built with
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {project.tech.map((t) => (
-                      <span
-                        key={t}
-                        className="glass text-[12px] px-3.5 py-1.5 rounded-full"
-                        style={{ color: "var(--text-2)" }}
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
+                <p
+                  style={{
+                    fontSize: 10,
+                    letterSpacing: "0.14em",
+                    textTransform: "uppercase",
+                    color: "rgba(255,255,255,0.3)",
+                    marginBottom: 10,
+                  }}
+                >
+                  Built with
+                </p>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                  {project.tech.map((t) => (
+                    <span
+                      key={t}
+                      className="glass"
+                      style={{
+                        fontSize: 12,
+                        padding: "6px 14px",
+                        borderRadius: 100,
+                        color: "rgba(255,255,255,0.55)",
+                      }}
+                    >
+                      {t}
+                    </span>
+                  ))}
                 </div>
               </div>
             </div>

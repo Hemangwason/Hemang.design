@@ -1,69 +1,80 @@
+export type DeviceType = "phone" | "laptop";
+
 export interface Project {
   id: string;
   name: string;
+  company?: string;
   tagline: string;
   description: string;
   tech: string[];
   status: string;
   year: string;
-  imageSrc: string;
+  device: DeviceType;
+  gradient: readonly [string, string];
   videoSrc?: string;
 }
 
 export const projects: Project[] = [
   {
     id: "01",
-    name: "VoicePort",
-    tagline: "Real-time emotion detection from voice",
+    name: "Sidekick",
+    tagline: "Your second brain in your pocket",
     description:
-      "An AI model that analyzes vocal patterns to detect and visualize emotional states in real-time. Built using deep learning on audio waveforms — maps tone, pace, and pitch to an emotional spectrum. Used in interview prep and mental wellness tools.",
-    tech: ["Python", "TensorFlow", "WebRTC", "React"],
+      "A mobile-first AI companion built to help you make fast decisions, draft sharp replies, and cut through the noise — without context-switching out of your life. Built for the always-on generation.",
+    tech: ["React Native", "Claude API", "Supabase", "Expo"],
     status: "Live",
     year: "2024",
-    imageSrc: "/characters/jex-selfie.png",
+    device: "phone",
+    gradient: ["#0f0c29", "#302b63"],
   },
   {
     id: "02",
-    name: "StoryBoard AI",
-    tagline: "Turn prompts into illustrated story panels",
+    name: "Creator",
+    tagline: "From brief to publish in one window",
     description:
-      "Feed a story prompt and receive a full illustrated comic panel layout. Combines LLM narrative generation with image diffusion models to create storyboard-quality visuals from text alone. For screenwriters and visual storytellers.",
-    tech: ["Stable Diffusion", "GPT-4", "Next.js", "Python"],
-    status: "Beta",
+      "An AI-powered content suite for solo creators and small teams. Handles ideation, drafting, image direction, and scheduling — without leaving the tab.",
+    tech: ["Next.js", "OpenAI", "Figma API", "Node.js"],
+    status: "Live",
     year: "2024",
-    imageSrc: "/characters/kurta-saree.png",
+    device: "laptop",
+    gradient: ["#1a0533", "#3d1273"],
   },
   {
     id: "03",
-    name: "CaptionCraft",
-    tagline: "Smart captions that sound like you",
+    name: "Boomerang",
+    tagline: "Send it. It comes back handled.",
     description:
-      "Fine-tuned AI caption generator that learns your writing style from a sample of your previous posts. Generates platform-aware captions for Instagram, LinkedIn, and X that feel authentically yours — not like they came from a template.",
-    tech: ["Fine-tuned LLM", "Next.js", "Supabase", "OpenAI"],
-    status: "Live",
+      "An async comms tool that turns one-sided updates into tracked, resolved conversations. Drop a thought in, it follows up until there's closure — no chasing required.",
+    tech: ["React", "Supabase", "Resend", "TypeScript"],
+    status: "Beta",
     year: "2024",
-    imageSrc: "/characters/mirror-selfie.png",
+    device: "laptop",
+    gradient: ["#0d3b2e", "#0a1628"],
   },
   {
     id: "04",
-    name: "Mood Canvas",
-    tagline: "AI mood boards from a single sentence",
+    name: "Razorpay",
+    company: "Tripadvisor",
+    tagline: "Payments that don't interrupt the moment",
     description:
-      "Describe a feeling, brand, or idea in one sentence. Mood Canvas assembles a curated visual board — palettes, textures, typography references, and image compositions — in seconds. No design experience required.",
-    tech: ["DALL-E 3", "Pinecone", "Next.js", "Python"],
-    status: "In Progress",
-    year: "2024",
-    imageSrc: "/characters/field.png",
+      "Redesigned checkout and payment UX for Tripadvisor's hotel and experience bookings. Focused on reducing drop-off at the payment step by making it feel invisible and trustworthy.",
+    tech: ["Razorpay SDK", "React", "A/B Testing", "Figma"],
+    status: "Case Study",
+    year: "2023",
+    device: "laptop",
+    gradient: ["#0a1628", "#1e3a5f"],
   },
   {
     id: "05",
-    name: "Character Lab",
-    tagline: "Design your alter ego with AI",
+    name: "Even",
+    company: "Healthcare",
+    tagline: "Healthcare that doesn't make you feel sick",
     description:
-      "Generate stylized character illustrations in the Jexlin art style. Customize skin tone, outfit era, accessories, and personality archetype. The first 1000 characters generated become part of a public gallery.",
-    tech: ["LoRA", "ComfyUI", "FastAPI", "React"],
-    status: "Coming Soon",
-    year: "2025",
-    imageSrc: "/characters/baseball.png",
+      "A consumer health app that simplifies insurance, prescriptions, and care access. Designed to reduce anxiety around health decisions through clear, human-first UX.",
+    tech: ["React Native", "HealthKit", "Node.js", "Firebase"],
+    status: "Live",
+    year: "2023",
+    device: "phone",
+    gradient: ["#0d2613", "#1a3a1a"],
   },
 ];

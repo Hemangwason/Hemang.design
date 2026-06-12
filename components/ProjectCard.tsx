@@ -1,8 +1,7 @@
 "use client";
 
-import { useRef, useState } from "react";
-import Image from "next/image";
-import { Play, Pause } from "lucide-react";
+import { useTilt } from "@/hooks/useTilt";
+import DeviceMockup from "./DeviceMockup";
 import type { Project } from "@/lib/projects";
 
 interface Props {
@@ -11,163 +10,121 @@ interface Props {
 }
 
 export default function ProjectCard({ project, onClick }: Props) {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [playing, setPlaying] = useState(true);
-
-  const togglePlay = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (!videoRef.current) return;
-    if (videoRef.current.paused) {
-      videoRef.current.play();
-      setPlaying(true);
-    } else {
-      videoRef.current.pause();
-      setPlaying(false);
-    }
-  };
+  const { style, shinePos, onMouseMove, onMouseLeave } = useTilt(11);
 
   return (
     <article
       onClick={onClick}
+      onMouseMove={onMouseMove}
+      onMouseLeave={onMouseLeave}
       style={{
         position: "relative",
-        borderRadius: "16px",
+        borderRadius: 20,
         overflow: "hidden",
         cursor: "pointer",
-        boxShadow: "0 2px 16px rgba(0,0,0,0.08)",
-        transition: "transform 0.22s ease, box-shadow 0.22s ease",
-      }}
-      onMouseEnter={(e) => {
-        const el = e.currentTarget as HTMLElement;
-        el.style.transform = "translateY(-5px)";
-        el.style.boxShadow = "0 12px 36px rgba(0,0,0,0.13)";
-      }}
-      onMouseLeave={(e) => {
-        const el = e.currentTarget as HTMLElement;
-        el.style.transform = "translateY(0)";
-        el.style.boxShadow = "0 2px 16px rgba(0,0,0,0.08)";
+        ...style,
       }}
     >
-      {/* Aspect-ratio wrapper — padding-bottom trick for reliable height */}
-      <div style={{ position: "relative", width: "100%", paddingBottom: "133.33%" }}>
-        {project.videoSrc ? (
-          <video
-            ref={videoRef}
-            src={project.videoSrc}
-            autoPlay
-            muted
-            loop
-            playsInline
-            style={{
-              position: "absolute",
-              inset: 0,
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              objectPosition: "top",
-              display: "block",
-            }}
-          />
-        ) : (
-          <Image
-            src={project.imageSrc}
-            alt={project.name}
-            fill
-            style={{ objectFit: "cover", objectPosition: "top" }}
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 40vw"
-          />
-        )}
-
-        {/* Gradient for readability */}
+      {/* Card body — padding-bottom for 1:1.15 ratio */}
+      <div style={{ position: "relative", width: "100%", paddingBottom: "115%" }}>
+        {/* Gradient background */}
         <div
           style={{
             position: "absolute",
             inset: 0,
-            background: "linear-gradient(to top, rgba(0,0,0,0.32) 0%, transparent 45%)",
-            pointerEvents: "none",
+            background: `linear-gradient(145deg, ${project.gradient[0]}, ${project.gradient[1]})`,
           }}
         />
-      </div>
 
-      {/* Glass info overlay — absolutely on top of the padding-box */}
-      <div
-        className="glass"
-        style={{
-          position: "absolute",
-          left: 10,
-          right: 10,
-          bottom: 10,
-          borderRadius: 12,
-          padding: "14px 16px",
-        }}
-      >
-        <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 8 }}>
-          <div style={{ minWidth: 0, flex: 1 }}>
-            <p
-              style={{
-                fontSize: 10,
-                letterSpacing: "0.12em",
-                textTransform: "uppercase",
-                color: "var(--text-3)",
-                marginBottom: 4,
-              }}
-            >
-              {project.id} &nbsp;·&nbsp; {project.status}
-            </p>
-            <h3
-              className="font-poppins"
-              style={{
-                fontWeight: 600,
-                fontSize: 15,
-                lineHeight: 1.25,
-                color: "var(--text)",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
-              }}
-            >
-              {project.name}
-            </h3>
-            <p
-              style={{
-                fontSize: 12,
-                marginTop: 2,
-                color: "var(--text-2)",
-                lineHeight: 1.4,
-                display: "-webkit-box",
-                WebkitLineClamp: 2,
-                WebkitBoxOrient: "vertical",
-                overflow: "hidden",
-              }}
-            >
-              {project.tagline}
-            </p>
-          </div>
+        {/* Specular shine that follows the mouse */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: `radial-gradient(circle at ${shinePos.x}% ${shinePos.y}%, rgba(255,255,255,0.10) 0%, transparent 60%)`,
+            pointerEvents: "none",
+            zIndex: 2,
+            transition: "background 0.05s linear",
+          }}
+        />
 
-          {/* Play/pause button for video only */}
-          {project.videoSrc && (
-            <button
-              onClick={togglePlay}
-              className="glass"
-              style={{
-                flexShrink: 0,
-                width: 32,
-                height: 32,
-                borderRadius: "50%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                cursor: "pointer",
-              }}
-              aria-label={playing ? "Pause" : "Play"}
-            >
-              {playing ? (
-                <Pause size={11} strokeWidth={2.5} />
-              ) : (
-                <Play size={11} strokeWidth={2.5} />
-              )}
-            </button>
-          )}
+        {/* Device mockup — centered in upper portion */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            paddingTop: "12%",
+            paddingBottom: "28%",
+            zIndex: 1,
+          }}
+        >
+          <DeviceMockup
+            device={project.device}
+            gradient={project.gradient}
+            videoSrc={project.videoSrc}
+          />
+        </div>
+
+        {/* Glass info overlay at bottom */}
+        <div
+          className="glass-dark"
+          style={{
+            position: "absolute",
+            left: 10,
+            right: 10,
+            bottom: 10,
+            borderRadius: 14,
+            padding: "14px 16px",
+            zIndex: 3,
+          }}
+        >
+          <p
+            style={{
+              fontSize: 10,
+              letterSpacing: "0.14em",
+              textTransform: "uppercase",
+              color: "rgba(255,255,255,0.38)",
+              marginBottom: 5,
+            }}
+          >
+            {project.id}&nbsp;&nbsp;·&nbsp;&nbsp;{project.status}
+            {project.company && (
+              <span style={{ marginLeft: 6, color: "rgba(255,255,255,0.22)" }}>
+                / {project.company}
+              </span>
+            )}
+          </p>
+
+          <h3
+            className="font-poppins"
+            style={{
+              fontWeight: 600,
+              fontSize: 16,
+              lineHeight: 1.2,
+              color: "#fff",
+              letterSpacing: "-0.01em",
+            }}
+          >
+            {project.name}
+          </h3>
+
+          <p
+            style={{
+              fontSize: 12,
+              marginTop: 3,
+              color: "rgba(255,255,255,0.5)",
+              lineHeight: 1.45,
+              overflow: "hidden",
+              display: "-webkit-box",
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: "vertical",
+            }}
+          >
+            {project.tagline}
+          </p>
         </div>
       </div>
     </article>
