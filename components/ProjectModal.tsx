@@ -26,50 +26,69 @@ export default function ProjectModal({ project, onClose }: Props) {
               position: "fixed",
               inset: 0,
               zIndex: 100,
-              background: "rgba(10,10,10,0.6)",
-              backdropFilter: "blur(12px)",
-              WebkitBackdropFilter: "blur(12px)",
+              background: "rgba(10,10,10,0.65)",
+              backdropFilter: "blur(14px)",
+              WebkitBackdropFilter: "blur(14px)",
             }}
             onClick={onClose}
           />
 
-          {/* Panel */}
+          {/*
+           * Centering wrapper — flexbox, not transform, to avoid conflicting
+           * with Framer Motion's scale/y animation on the panel below.
+           */}
           <motion.div
-            key="panel"
-            initial={{ opacity: 0, scale: 0.95, y: 24 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 16 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            key="panel-wrapper"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
             style={{
               position: "fixed",
+              inset: 0,
               zIndex: 101,
-              top: "5vh",
-              bottom: "5vh",
-              left: "50%",
-              transform: "translateX(-50%)",
-              width: "min(540px, 92vw)",
-              borderRadius: 24,
-              overflow: "hidden",
-              background: `linear-gradient(145deg, ${project.gradient[0]}ee, ${project.gradient[1]}ee)`,
-              boxShadow: "0 32px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.1)",
+              display: "flex",
+              alignItems: "flex-start",
+              justifyContent: "center",
+              paddingTop: "4vh",
+              paddingBottom: "4vh",
+              overflowY: "auto",
+              pointerEvents: "none",
             }}
           >
-            <div style={{ height: "100%", overflowY: "auto" }}>
-              {/* Hero area with device */}
+            {/* Panel */}
+            <motion.div
+              initial={{ scale: 0.94, y: 28 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.94, y: 20 }}
+              transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
+              style={{
+                pointerEvents: "auto",
+                width: "min(540px, 92vw)",
+                borderRadius: 24,
+                overflow: "hidden",
+                background: `linear-gradient(145deg, ${project.gradient[0]}f0, ${project.gradient[1]}f0)`,
+                boxShadow: "0 40px 100px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.1)",
+                flexShrink: 0,
+              }}
+            >
+              {/* Hero: device mockup */}
               <div
                 style={{
                   position: "relative",
-                  padding: "36px 32px 20px",
                   display: "flex",
                   justifyContent: "center",
-                  minHeight: 220,
                   alignItems: "center",
+                  minHeight: 300,
+                  padding: "40px 32px 24px",
+                  backgroundImage: `radial-gradient(ellipse 80% 60% at 50% 60%, ${project.gradient[1]}66, transparent 70%)`,
                 }}
               >
                 <DeviceMockup
                   device={project.device}
                   gradient={project.gradient}
                   videoSrc={project.videoSrc}
+                  size="modal"
                 />
 
                 {/* Close button */}
@@ -98,11 +117,11 @@ export default function ProjectModal({ project, onClose }: Props) {
               {/* Content */}
               <div
                 style={{
-                  background: "rgba(0,0,0,0.35)",
+                  background: "rgba(0,0,0,0.38)",
                   backdropFilter: "blur(24px)",
                   WebkitBackdropFilter: "blur(24px)",
                   borderTop: "1px solid rgba(255,255,255,0.08)",
-                  padding: "24px 28px 32px",
+                  padding: "24px 28px 36px",
                 }}
               >
                 <p
@@ -124,17 +143,17 @@ export default function ProjectModal({ project, onClose }: Props) {
                   className="font-poppins"
                   style={{
                     fontWeight: 700,
-                    fontSize: "1.75rem",
-                    lineHeight: 1.15,
+                    fontSize: "1.85rem",
+                    lineHeight: 1.1,
                     color: "#fff",
-                    letterSpacing: "-0.02em",
+                    letterSpacing: "-0.03em",
                     marginBottom: 6,
                   }}
                 >
                   {project.name}
                 </h2>
 
-                <p style={{ fontSize: 13, color: "rgba(255,255,255,0.5)", marginBottom: 20 }}>
+                <p style={{ fontSize: 13, color: "rgba(255,255,255,0.48)", marginBottom: 22 }}>
                   {project.tagline}
                 </p>
 
@@ -142,7 +161,7 @@ export default function ProjectModal({ project, onClose }: Props) {
                   style={{
                     height: 1,
                     background: "rgba(255,255,255,0.08)",
-                    marginBottom: 20,
+                    marginBottom: 22,
                   }}
                 />
 
@@ -150,8 +169,8 @@ export default function ProjectModal({ project, onClose }: Props) {
                   style={{
                     fontSize: 13,
                     lineHeight: 1.85,
-                    color: "rgba(255,255,255,0.6)",
-                    marginBottom: 24,
+                    color: "rgba(255,255,255,0.62)",
+                    marginBottom: 28,
                   }}
                 >
                   {project.description}
@@ -185,7 +204,7 @@ export default function ProjectModal({ project, onClose }: Props) {
                   ))}
                 </div>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
         </>
       )}

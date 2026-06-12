@@ -1,6 +1,6 @@
 "use client";
 
-import { Instagram, Twitter, Linkedin, Copy, Check, ChevronLeft, ChevronRight } from "lucide-react";
+import { Instagram, Twitter, Linkedin, Copy, Check } from "lucide-react";
 import { useState } from "react";
 import CharacterDeck from "./CharacterDeck";
 
@@ -14,10 +14,9 @@ const socials = [
 
 interface Props {
   open: boolean;
-  onToggle: () => void;
 }
 
-export default function Sidebar({ open, onToggle }: Props) {
+export default function Sidebar({ open }: Props) {
   const [copied, setCopied] = useState(false);
 
   const copyEmail = () => {
@@ -44,34 +43,6 @@ export default function Sidebar({ open, onToggle }: Props) {
           zIndex: 50,
         }}
       >
-        {/* Toggle button — always visible */}
-        <button
-          onClick={onToggle}
-          className="glass"
-          style={{
-            position: "absolute",
-            right: 10,
-            top: 18,
-            width: 30,
-            height: 30,
-            borderRadius: "50%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
-            zIndex: 10,
-            flexShrink: 0,
-            color: "var(--text-2)",
-          }}
-          aria-label={open ? "Collapse sidebar" : "Expand sidebar"}
-        >
-          {open ? (
-            <ChevronLeft size={13} strokeWidth={2} />
-          ) : (
-            <ChevronRight size={13} strokeWidth={2} />
-          )}
-        </button>
-
         {/* Collapsed pill label */}
         <div
           style={{
@@ -103,13 +74,13 @@ export default function Sidebar({ open, onToggle }: Props) {
             display: "flex",
             flexDirection: "column",
             height: "100%",
-            padding: "52px 40px 36px",
+            padding: "28px 40px 36px",
             minWidth: 360,
             overflowY: "auto",
           }}
         >
           {/* Brand */}
-          <div style={{ marginBottom: 36 }}>
+          <div style={{ marginBottom: 32 }}>
             <h1
               className="font-poppins"
               style={{ fontWeight: 600, fontSize: 17, lineHeight: 1.3, color: "var(--text)" }}
@@ -131,8 +102,7 @@ export default function Sidebar({ open, onToggle }: Props) {
               <span style={{ color: "var(--text)" }}>Zomato</span>.
             </p>
             <p style={{ fontSize: 13, lineHeight: 1.8, color: "var(--text-2)" }}>
-              This is a small museum of AI experiments I couldn&apos;t stop thinking about. Jex
-              and Lin live here too — they have since college.
+              Five things that escaped my notebook and got built anyway.
             </p>
           </div>
 
@@ -215,7 +185,7 @@ export default function Sidebar({ open, onToggle }: Props) {
             color: "var(--text-2)",
           }}
         >
-          Product designer at Zepto. These are five AI experiments I made.
+          Product designer at Zepto. Five things built because they had to exist.
         </p>
         <div style={{ display: "flex", gap: 10, marginTop: 18, flexWrap: "wrap" }}>
           {socials.map(({ icon: Icon, label, href }) => (

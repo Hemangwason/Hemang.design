@@ -37,18 +37,46 @@ export default function ProjectCard({ project, onClick }: Props) {
           }}
         />
 
+        {/* Subtle dot grid — adds texture without noise */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            backgroundImage: "radial-gradient(rgba(255,255,255,0.055) 1px, transparent 1px)",
+            backgroundSize: "20px 20px",
+            zIndex: 1,
+            pointerEvents: "none",
+          }}
+        />
+
+        {/* Ambient glow — soft bloom behind where the device sits */}
+        <div
+          style={{
+            position: "absolute",
+            top: "15%",
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: "70%",
+            height: "50%",
+            background: `radial-gradient(ellipse, ${project.gradient[1]}55 0%, transparent 70%)`,
+            filter: "blur(32px)",
+            zIndex: 1,
+            pointerEvents: "none",
+          }}
+        />
+
         {/* Specular shine tracking mouse */}
         <div
           style={{
             position: "absolute",
             inset: 0,
-            background: `radial-gradient(circle at ${shinePos.x}% ${shinePos.y}%, rgba(255,255,255,0.09) 0%, transparent 55%)`,
+            background: `radial-gradient(circle at ${shinePos.x}% ${shinePos.y}%, rgba(255,255,255,0.08) 0%, transparent 55%)`,
             pointerEvents: "none",
-            zIndex: 2,
+            zIndex: 3,
           }}
         />
 
-        {/* Device mockup — fills center, overflows naturally into gradient */}
+        {/* Device mockup — centered in card */}
         <div
           style={{
             position: "absolute",
@@ -56,7 +84,7 @@ export default function ProjectCard({ project, onClick }: Props) {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            zIndex: 1,
+            zIndex: 2,
           }}
         >
           <DeviceMockup
@@ -77,7 +105,7 @@ export default function ProjectCard({ project, onClick }: Props) {
             bottom: 10,
             borderRadius: 14,
             padding: "14px 16px",
-            zIndex: 3,
+            zIndex: 4,
           }}
         >
           <p
@@ -101,10 +129,10 @@ export default function ProjectCard({ project, onClick }: Props) {
             className="font-poppins"
             style={{
               fontWeight: 600,
-              fontSize: 16,
+              fontSize: 17,
               lineHeight: 1.2,
               color: "#fff",
-              letterSpacing: "-0.01em",
+              letterSpacing: "-0.02em",
             }}
           >
             {project.name}
@@ -113,7 +141,7 @@ export default function ProjectCard({ project, onClick }: Props) {
           <p
             style={{
               fontSize: 12,
-              marginTop: 3,
+              marginTop: 4,
               color: "rgba(255,255,255,0.48)",
               lineHeight: 1.45,
               overflow: "hidden",

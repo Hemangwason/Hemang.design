@@ -24,12 +24,12 @@ function PhoneMockup({
   videoSrc?: string;
   size: "card" | "modal";
 }) {
-  const w = size === "modal" ? 140 : 190;
-  const h = size === "modal" ? 280 : 400;
-  const radius = size === "modal" ? 30 : 40;
-  const bezel = size === "modal" ? 5 : 7;
-  const islandW = size === "modal" ? 52 : 70;
-  const islandH = size === "modal" ? 14 : 18;
+  const w = size === "modal" ? 200 : 190;
+  const h = size === "modal" ? 420 : 400;
+  const radius = size === "modal" ? 44 : 40;
+  const bezel = size === "modal" ? 8 : 7;
+  const islandW = size === "modal" ? 68 : 70;
+  const islandH = size === "modal" ? 17 : 18;
 
   return (
     <div
@@ -146,8 +146,8 @@ function LaptopMockup({
   videoSrc?: string;
   size: "card" | "modal";
 }) {
-  const screenW = size === "modal" ? 260 : 330;
-  const screenH = size === "modal" ? 164 : 208;
+  const screenW = size === "modal" ? 360 : 330;
+  const screenH = size === "modal" ? 226 : 208;
   const baseW = screenW + 24;
   const baseH = 12;
 
