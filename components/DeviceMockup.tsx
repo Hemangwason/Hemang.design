@@ -24,12 +24,12 @@ function PhoneMockup({
   videoSrc?: string;
   size: "card" | "modal";
 }) {
-  const w = size === "modal" ? 200 : 190;
-  const h = size === "modal" ? 420 : 400;
-  const radius = size === "modal" ? 44 : 40;
-  const bezel = size === "modal" ? 8 : 7;
-  const islandW = size === "modal" ? 68 : 70;
-  const islandH = size === "modal" ? 17 : 18;
+  const w = size === "modal" ? 180 : 158;
+  const h = size === "modal" ? 400 : 380;
+  const radius = size === "modal" ? 42 : 36;
+  const bezel = size === "modal" ? 7 : 6;
+  const islandW = size === "modal" ? 60 : 54;
+  const islandH = size === "modal" ? 15 : 14;
 
   return (
     <div

@@ -4,26 +4,24 @@ import { useState } from "react";
 import Image from "next/image";
 
 const cards = [
-  { src: "/characters/jex-selfie.png", label: "Jex" },
+  { src: "/characters/jex-selfie.png",    label: "Jex" },
   { src: "/characters/mirror-selfie.png", label: "Lin" },
-  { src: "/characters/kurta-saree.png", label: "Jex & Lin" },
-  { src: "/characters/baseball.png", label: "Jex" },
-  { src: "/characters/track.png", label: "Jex & Lin" },
-  { src: "/characters/field.png", label: "Jex & Lin" },
-  { src: "/characters/winter.png", label: "Lin" },
+  { src: "/characters/kurta-saree.png",   label: "Jex & Lin" },
+  { src: "/characters/baseball.png",      label: "Jex" },
+  { src: "/characters/track.png",         label: "Jex & Lin" },
+  { src: "/characters/field.png",         label: "Jex & Lin" },
+  { src: "/characters/winter.png",        label: "Lin" },
 ];
 
-const W = 108;
-const H = 162;
-// Spread per card when fanned. Container width = W + (count-1)*SPREAD
-// so all cards stay inside the container — no sidebar overflow.
-const SPREAD = 22;
+const W = 118;
+const H = 178;
+const OFFSET_X = 11;  // cascade: each card shifts right
+const OFFSET_Y = 20;  // cascade: each card shifts down
 const COUNT = cards.length;
-const CONTAINER_W = W + (COUNT - 1) * SPREAD; // 108 + 6*22 = 240px
-const BASE_LEFT = (CONTAINER_W - W) / 2;       // center anchor = 66px
+const CONTAINER_W = W + (COUNT - 1) * OFFSET_X; // 118 + 66 = 184px
+const CONTAINER_H = H + (COUNT - 1) * OFFSET_Y; // 178 + 120 = 298px
 
 export default function CharacterDeck() {
-  const [open, setOpen] = useState(false);
   const [hovered, setHovered] = useState<number | null>(null);
 
   return (
@@ -40,27 +38,17 @@ export default function CharacterDeck() {
         Jex &amp; Lin universe
       </p>
 
-      {/* Container is exactly wide enough for the full open spread */}
+      {/* Vertical cascade — each card peeks from beneath the next */}
       <div
         style={{
           position: "relative",
           width: CONTAINER_W,
-          height: H + 28, // room for lift on hover
-          cursor: "pointer",
-        }}
-        onMouseEnter={() => setOpen(true)}
-        onMouseLeave={() => {
-          setOpen(false);
-          setHovered(null);
+          height: CONTAINER_H,
+          cursor: "default",
         }}
       >
         {cards.map((card, i) => {
-          const offset = i - (COUNT - 1) / 2; // −3 … +3
-          const spreadX = open ? offset * SPREAD : offset * 2.5;
-          const rotate = open ? offset * 9 : offset * 2;
-          const lift = hovered === i ? -20 : 0;
-          const scale = hovered === i ? 1.07 : 1;
-
+          const isHov = hovered === i;
           return (
             <div
               key={card.src}
@@ -68,19 +56,22 @@ export default function CharacterDeck() {
               onMouseLeave={() => setHovered(null)}
               style={{
                 position: "absolute",
-                top: 14, // vertical room for lift
-                left: BASE_LEFT,
+                top: i * OFFSET_Y,
+                left: i * OFFSET_X,
                 width: W,
                 height: H,
                 borderRadius: 12,
                 overflow: "hidden",
-                transformOrigin: "bottom center",
-                transform: `translateX(${spreadX}px) translateY(${lift}px) rotate(${rotate}deg) scale(${scale})`,
-                transition: "transform 0.38s cubic-bezier(0.23, 1, 0.32, 1)",
-                zIndex: i,
-                boxShadow:
-                  "0 6px 22px rgba(0,0,0,0.18), 0 1px 4px rgba(0,0,0,0.08)",
-                border: "1px solid rgba(255,255,255,0.68)",
+                zIndex: isHov ? COUNT + 1 : i,
+                boxShadow: isHov
+                  ? "0 16px 40px rgba(0,0,0,0.28), 0 2px 8px rgba(0,0,0,0.14)"
+                  : "0 4px 14px rgba(0,0,0,0.16), 0 1px 3px rgba(0,0,0,0.08)",
+                border: "1px solid rgba(255,255,255,0.72)",
+                transform: isHov
+                  ? "translateY(-18px) translateX(-6px) rotate(-2deg) scale(1.06)"
+                  : "none",
+                transition: "transform 0.32s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.32s ease",
+                cursor: "pointer",
               }}
             >
               <Image
@@ -88,7 +79,7 @@ export default function CharacterDeck() {
                 alt={card.label}
                 fill
                 style={{ objectFit: "cover", objectPosition: "top" }}
-                sizes="108px"
+                sizes="118px"
               />
             </div>
           );
@@ -100,9 +91,7 @@ export default function CharacterDeck() {
           fontSize: 10,
           color: "var(--text-3)",
           letterSpacing: "0.06em",
-          marginTop: 18,
-          opacity: open ? 1 : 0,
-          transition: "opacity 0.2s ease",
+          marginTop: 20,
         }}
       >
         7 chapters. One world.

@@ -48,19 +48,6 @@ function PhoneShell({
         }}
       >
         {children}
-        {/* Top fade — masks content that would clash with the dynamic island */}
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            height: 32,
-            background: "linear-gradient(to bottom, #000 30%, transparent)",
-            zIndex: 5,
-            pointerEvents: "none",
-          }}
-        />
       </div>
       {/* Dynamic island */}
       <div
@@ -80,16 +67,16 @@ function PhoneShell({
   );
 }
 
-/* ─── Screenshot phone (section) — 148 × 296 ─── */
+/* ─── Screenshot phone (section) — 130 × 275 ─── */
 function SectionPhone({ src, alt }: { src: string; alt: string }) {
   return (
-    <PhoneShell w={148} h={296} radius={26} bezel={6} islandW={46} islandH={12}>
+    <PhoneShell w={130} h={275} radius={24} bezel={5} islandW={42} islandH={11}>
       <Image
         src={src}
         alt={alt}
         fill
         style={{ objectFit: "cover", objectPosition: "top" }}
-        sizes="148px"
+        sizes="130px"
       />
     </PhoneShell>
   );
@@ -113,18 +100,18 @@ function HeroFan({ videoSrc }: { videoSrc?: string }) {
           position: "absolute",
           bottom: 20,
           left: "50%",
-          transform: "translateX(-200px) rotate(-14deg)",
+          transform: "translateX(-185px) rotate(-14deg)",
           zIndex: 1,
           opacity: 0.72,
         }}
       >
-        <PhoneShell w={148} h={296} radius={26} bezel={6} islandW={46} islandH={12}>
+        <PhoneShell w={128} h={262} radius={24} bezel={5} islandW={40} islandH={11}>
           <Image
             src="/screenshots/st-focus.png"
             alt="Focus block"
             fill
             style={{ objectFit: "cover", objectPosition: "top" }}
-            sizes="148px"
+            sizes="128px"
           />
         </PhoneShell>
       </div>
@@ -135,18 +122,18 @@ function HeroFan({ videoSrc }: { videoSrc?: string }) {
           position: "absolute",
           bottom: 20,
           left: "50%",
-          transform: "translateX(52px) rotate(12deg)",
+          transform: "translateX(58px) rotate(12deg)",
           zIndex: 2,
           opacity: 0.8,
         }}
       >
-        <PhoneShell w={148} h={296} radius={26} bezel={6} islandW={46} islandH={12}>
+        <PhoneShell w={128} h={262} radius={24} bezel={5} islandW={40} islandH={11}>
           <Image
             src="/screenshots/st-book.png"
             alt="Book a session"
             fill
             style={{ objectFit: "cover", objectPosition: "top" }}
-            sizes="148px"
+            sizes="128px"
           />
         </PhoneShell>
       </div>
@@ -154,12 +141,12 @@ function HeroFan({ videoSrc }: { videoSrc?: string }) {
       {/* Center — live video */}
       <div style={{ position: "relative", zIndex: 3 }}>
         <PhoneShell
-          w={168}
-          h={340}
-          radius={34}
-          bezel={7}
-          islandW={56}
-          islandH={14}
+          w={152}
+          h={324}
+          radius={32}
+          bezel={6}
+          islandW={50}
+          islandH={13}
           shadow="0 0 0 1px rgba(255,255,255,0.14), 0 40px 100px rgba(0,0,0,0.85), inset 0 1px 0 rgba(255,255,255,0.12)"
         >
           {videoSrc ? (
@@ -560,51 +547,11 @@ export default function SidetakeCaseStudy({ project, onClose }: Props) {
                 );
               })}
 
-              {/* In-line walkthrough video */}
+              {/* CTA row */}
               <div
                 style={{
-                  padding: "0 52px 64px",
+                  padding: "40px 52px 52px",
                   borderTop: "1px solid rgba(255,255,255,0.05)",
-                  paddingTop: 52,
-                }}
-              >
-                <div
-                  style={{
-                    fontSize: 9,
-                    letterSpacing: "0.14em",
-                    textTransform: "uppercase",
-                    color: "rgba(255,255,255,0.25)",
-                    marginBottom: 16,
-                  }}
-                >
-                  Walkthrough
-                </div>
-                <div
-                  style={{
-                    borderRadius: 16,
-                    overflow: "hidden",
-                    border: "1px solid rgba(255,255,255,0.07)",
-                    background: "#000",
-                    aspectRatio: "9/16",
-                    maxWidth: 280,
-                  }}
-                >
-                  <video
-                    src="/sidetake.mp4"
-                    controls
-                    loop
-                    playsInline
-                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-                  />
-                </div>
-              </div>
-
-              {/* Figma / prototype CTA */}
-              <div
-                style={{
-                  padding: "0 52px 52px",
-                  borderTop: "1px solid rgba(255,255,255,0.05)",
-                  paddingTop: 40,
                   display: "flex",
                   flexDirection: "column",
                   gap: 12,
@@ -622,38 +569,7 @@ export default function SidetakeCaseStudy({ project, onClose }: Props) {
                   Explore
                 </div>
                 <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-                  {/* Replace href with actual Figma prototype URL */}
-                  <a
-                    href="https://www.figma.com/proto/REPLACE_WITH_ACTUAL_LINK"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      display: "inline-flex",
-                      alignItems: "center",
-                      gap: 8,
-                      padding: "12px 20px",
-                      borderRadius: 100,
-                      background: "rgba(167,139,250,0.1)",
-                      border: "1px solid rgba(167,139,250,0.25)",
-                      color: "rgba(167,139,250,0.9)",
-                      fontSize: 13,
-                      fontWeight: 600,
-                      textDecoration: "none",
-                      letterSpacing: "-0.01em",
-                      cursor: "pointer",
-                    }}
-                  >
-                    <svg width="14" height="14" viewBox="0 0 38 57" fill="none" style={{ flexShrink: 0 }}>
-                      <path d="M19 28.5C19 25.9 20.07 23.58 21.81 21.94C23.54 20.3 25.9 19.25 28.5 19.25C31.1 19.25 33.46 20.3 35.19 21.94C36.93 23.58 38 25.9 38 28.5C38 31.1 36.93 33.42 35.19 35.06C33.46 36.7 31.1 37.75 28.5 37.75C25.9 37.75 23.54 36.7 21.81 35.06C20.07 33.42 19 31.1 19 28.5Z" fill="rgba(167,139,250,0.8)"/>
-                      <path d="M0 47.5C0 44.9 1.07 42.58 2.81 40.94C4.54 39.3 6.9 38.25 9.5 38.25H19V47.5C19 50.1 17.93 52.42 16.19 54.06C14.46 55.7 12.1 56.75 9.5 56.75C6.9 56.75 4.54 55.7 2.81 54.06C1.07 52.42 0 50.1 0 47.5Z" fill="rgba(167,139,250,0.8)"/>
-                      <path d="M19 0.25V19.25H28.5C31.1 19.25 33.46 18.2 35.19 16.56C36.93 14.92 38 12.6 38 10C38 7.4 36.93 5.08 35.19 3.44C33.46 1.8 31.1 0.75 28.5 0.75L19 0.25Z" fill="rgba(167,139,250,0.8)"/>
-                      <path d="M0 10C0 12.6 1.07 14.92 2.81 16.56C4.54 18.2 6.9 19.25 9.5 19.25H19V0.25H9.5C6.9 0.25 4.54 1.3 2.81 2.94C1.07 4.58 0 6.9 0 10Z" fill="rgba(167,139,250,0.8)"/>
-                      <path d="M0 28.5C0 31.1 1.07 33.42 2.81 35.06C4.54 36.7 6.9 37.75 9.5 37.75H19V19.25H9.5C6.9 19.25 4.54 20.3 2.81 21.94C1.07 23.58 0 25.9 0 28.5Z" fill="rgba(167,139,250,0.8)"/>
-                    </svg>
-                    View in Figma
-                    <ExternalLink size={11} style={{ opacity: 0.6 }} />
-                  </a>
-
+                  {/* Figma prototype — paste URL below when ready */}
                   <a
                     href="https://www.sidetake.com"
                     target="_blank"
@@ -671,7 +587,6 @@ export default function SidetakeCaseStudy({ project, onClose }: Props) {
                       fontWeight: 600,
                       textDecoration: "none",
                       letterSpacing: "-0.01em",
-                      cursor: "pointer",
                     }}
                   >
                     Visit Site
