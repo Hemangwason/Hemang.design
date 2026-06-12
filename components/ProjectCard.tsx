@@ -29,24 +29,27 @@ export default function ProjectCard({ project, onClick }: Props) {
   return (
     <article
       onClick={onClick}
-      className="relative rounded-2xl overflow-hidden cursor-pointer group"
       style={{
+        position: "relative",
+        borderRadius: "16px",
+        overflow: "hidden",
+        cursor: "pointer",
+        boxShadow: "0 2px 16px rgba(0,0,0,0.08)",
         transition: "transform 0.22s ease, box-shadow 0.22s ease",
-        boxShadow: "0 2px 20px rgba(0,0,0,0.07)",
       }}
       onMouseEnter={(e) => {
-        (e.currentTarget as HTMLElement).style.transform = "translateY(-5px)";
-        (e.currentTarget as HTMLElement).style.boxShadow =
-          "0 12px 40px rgba(0,0,0,0.12)";
+        const el = e.currentTarget as HTMLElement;
+        el.style.transform = "translateY(-5px)";
+        el.style.boxShadow = "0 12px 36px rgba(0,0,0,0.13)";
       }}
       onMouseLeave={(e) => {
-        (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
-        (e.currentTarget as HTMLElement).style.boxShadow =
-          "0 2px 20px rgba(0,0,0,0.07)";
+        const el = e.currentTarget as HTMLElement;
+        el.style.transform = "translateY(0)";
+        el.style.boxShadow = "0 2px 16px rgba(0,0,0,0.08)";
       }}
     >
-      {/* Visual */}
-      <div className="relative" style={{ aspectRatio: "3/4" }}>
+      {/* Aspect-ratio wrapper — padding-bottom trick for reliable height */}
+      <div style={{ position: "relative", width: "100%", paddingBottom: "133.33%" }}>
         {project.videoSrc ? (
           <video
             ref={videoRef}
@@ -55,60 +58,107 @@ export default function ProjectCard({ project, onClick }: Props) {
             muted
             loop
             playsInline
-            className="absolute inset-0 w-full h-full object-cover"
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              objectPosition: "top",
+              display: "block",
+            }}
           />
         ) : (
           <Image
             src={project.imageSrc}
             alt={project.name}
             fill
-            className="object-cover object-top"
-            sizes="(max-width: 1024px) 100vw, 45vw"
+            style={{ objectFit: "cover", objectPosition: "top" }}
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 40vw"
           />
         )}
 
-        {/* Subtle bottom gradient for readability */}
+        {/* Gradient for readability */}
         <div
-          className="absolute inset-x-0 bottom-0 h-40 pointer-events-none"
           style={{
-            background:
-              "linear-gradient(to top, rgba(0,0,0,0.35) 0%, transparent 100%)",
+            position: "absolute",
+            inset: 0,
+            background: "linear-gradient(to top, rgba(0,0,0,0.32) 0%, transparent 45%)",
+            pointerEvents: "none",
           }}
         />
       </div>
 
-      {/* Glass info overlay */}
+      {/* Glass info overlay — absolutely on top of the padding-box */}
       <div
-        className="absolute inset-x-3 bottom-3 glass rounded-xl p-4"
-        style={{ color: "var(--text)" }}
+        className="glass"
+        style={{
+          position: "absolute",
+          left: 10,
+          right: 10,
+          bottom: 10,
+          borderRadius: 12,
+          padding: "14px 16px",
+        }}
       >
-        <div className="flex items-start justify-between gap-3">
-          <div className="min-w-0">
+        <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 8 }}>
+          <div style={{ minWidth: 0, flex: 1 }}>
             <p
-              className="text-[11px] tracking-widest uppercase mb-1"
-              style={{ color: "var(--text-3)" }}
+              style={{
+                fontSize: 10,
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                color: "var(--text-3)",
+                marginBottom: 4,
+              }}
             >
               {project.id} &nbsp;·&nbsp; {project.status}
             </p>
             <h3
-              className="font-poppins font-semibold text-[15px] leading-tight truncate"
-              style={{ color: "var(--text)" }}
+              className="font-poppins"
+              style={{
+                fontWeight: 600,
+                fontSize: 15,
+                lineHeight: 1.25,
+                color: "var(--text)",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
             >
               {project.name}
             </h3>
             <p
-              className="text-[12px] mt-0.5 leading-snug line-clamp-2"
-              style={{ color: "var(--text-2)" }}
+              style={{
+                fontSize: 12,
+                marginTop: 2,
+                color: "var(--text-2)",
+                lineHeight: 1.4,
+                display: "-webkit-box",
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: "vertical",
+                overflow: "hidden",
+              }}
             >
               {project.tagline}
             </p>
           </div>
 
-          {/* Play/pause button — only for video */}
+          {/* Play/pause button for video only */}
           {project.videoSrc && (
             <button
               onClick={togglePlay}
-              className="glass shrink-0 w-8 h-8 rounded-full flex items-center justify-center hover:scale-105 transition-transform"
+              className="glass"
+              style={{
+                flexShrink: 0,
+                width: 32,
+                height: 32,
+                borderRadius: "50%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+              }}
               aria-label={playing ? "Pause" : "Play"}
             >
               {playing ? (
