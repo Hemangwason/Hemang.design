@@ -1,23 +1,15 @@
-import Nav from "@/components/Nav";
-import Hero from "@/components/Hero";
-import About from "@/components/About";
-import Exhibition from "@/components/Exhibition";
-import CharacterGallery from "@/components/CharacterGallery";
-import Footer from "@/components/Footer";
-import Cursor from "@/components/Cursor";
+import Sidebar from "@/components/Sidebar";
+import ProjectGrid from "@/components/ProjectGrid";
 
 export default function Home() {
   return (
-    <>
-      <Cursor />
-      <Nav />
-      <main>
-        <Hero />
-        <About />
-        <Exhibition />
-        <CharacterGallery />
+    <div className="min-h-screen">
+      <Sidebar />
+
+      {/* Main content — offset by sidebar on desktop */}
+      <main className="lg:ml-[360px] px-6 pt-4 pb-16 lg:px-14 lg:pt-14">
+        <ProjectGrid />
       </main>
-      <Footer />
-    </>
+    </div>
   );
 }

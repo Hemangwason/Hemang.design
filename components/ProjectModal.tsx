@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
+import Image from "next/image";
 import type { Project } from "@/lib/projects";
 
 interface Props {
@@ -9,167 +10,127 @@ interface Props {
   onClose: () => void;
 }
 
-const statusColors: Record<Project["status"], string> = {
-  Live: "#6bd4a8",
-  Beta: "#d4a848",
-  "In Progress": "#45a8d4",
-  "Coming Soon": "#8b8b8b",
-};
-
 export default function ProjectModal({ project, onClose }: Props) {
   return (
     <AnimatePresence>
       {project && (
         <>
-          {/* Overlay */}
+          {/* Backdrop */}
           <motion.div
-            key="overlay"
+            key="backdrop"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            onClick={onClose}
+            transition={{ duration: 0.2 }}
             className="fixed inset-0 z-[100]"
-            style={{ background: "rgba(7,7,12,0.88)", backdropFilter: "blur(8px)" }}
+            style={{
+              background: "rgba(10,10,10,0.55)",
+              backdropFilter: "blur(10px)",
+              WebkitBackdropFilter: "blur(10px)",
+            }}
+            onClick={onClose}
           />
 
-          {/* Modal panel */}
+          {/* Panel */}
           <motion.div
-            key="modal"
-            initial={{ opacity: 0, y: 32, scale: 0.97 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 24, scale: 0.97 }}
-            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed z-[101] overflow-y-auto"
+            key="panel"
+            initial={{ opacity: 0, scale: 0.96, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.96, y: 16 }}
+            transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed z-[101] glass rounded-3xl overflow-hidden"
             style={{
-              inset: "5vh 5vw",
-              maxWidth: 680,
-              margin: "0 auto",
-              background: "var(--bg-surface)",
-              border: "1px solid var(--border-strong)",
-              borderRadius: 2,
-              padding: "clamp(2rem, 5vw, 4rem)",
+              top: "5vh",
+              bottom: "5vh",
+              left: "50%",
+              transform: "translateX(-50%)",
+              width: "min(560px, 92vw)",
             }}
           >
-            {/* Close */}
-            <button
-              onClick={onClose}
-              className="absolute top-6 right-6 transition-colors duration-200 hover:opacity-100"
-              style={{ color: "var(--text-muted)", opacity: 0.7 }}
-              aria-label="Close"
-            >
-              <X size={18} />
-            </button>
+            <div className="h-full overflow-y-auto">
+              {/* Image header */}
+              <div className="relative" style={{ height: 260 }}>
+                <Image
+                  src={project.imageSrc}
+                  alt={project.name}
+                  fill
+                  className="object-cover object-top"
+                  sizes="560px"
+                />
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background:
+                      "linear-gradient(to bottom, transparent 40%, rgba(255,255,255,0.95) 100%)",
+                  }}
+                />
 
-            {/* Exhibit number */}
-            <div
-              className="text-xs tracking-[0.35em] uppercase mb-10"
-              style={{ color: "var(--text-dim)" }}
-            >
-              Exhibit №{project.id}
-            </div>
-
-            {/* Name */}
-            <h2
-              className="font-serif leading-tight mb-3"
-              style={{
-                fontFamily: "var(--font-serif)",
-                fontSize: "clamp(2rem, 5vw, 3.5rem)",
-                color: "var(--text)",
-              }}
-            >
-              {project.name}
-            </h2>
-
-            <p
-              className="text-sm mb-8"
-              style={{ color: "var(--text-muted)" }}
-            >
-              {project.tagline}
-            </p>
-
-            <div
-              className="h-px w-full mb-8"
-              style={{ background: "var(--border)" }}
-            />
-
-            {/* Full description */}
-            <p
-              className="text-sm leading-[1.95] mb-10"
-              style={{ color: "var(--text-muted)", maxWidth: 520 }}
-            >
-              {project.description}
-            </p>
-
-            {/* Tech stack */}
-            <div className="mb-10">
-              <div
-                className="text-xs tracking-[0.25em] uppercase mb-4"
-                style={{ color: "var(--text-dim)" }}
-              >
-                Built with
+                {/* Close button */}
+                <button
+                  onClick={onClose}
+                  className="absolute top-4 right-4 glass w-9 h-9 rounded-full flex items-center justify-center hover:scale-105 transition-transform"
+                  aria-label="Close"
+                >
+                  <X size={15} strokeWidth={2} />
+                </button>
               </div>
-              <div className="flex flex-wrap gap-2">
-                {project.tech.map((t) => (
-                  <span
-                    key={t}
-                    className="px-3 py-1.5 text-xs rounded-sm"
-                    style={{
-                      border: "1px solid var(--border)",
-                      color: "var(--text-muted)",
-                      background: "var(--bg-card)",
-                    }}
+
+              {/* Content */}
+              <div className="px-8 pb-10 -mt-4">
+                <p
+                  className="text-[11px] tracking-widest uppercase mb-2"
+                  style={{ color: "var(--text-3)" }}
+                >
+                  {project.year} &nbsp;·&nbsp; {project.status}
+                </p>
+
+                <h2
+                  className="font-poppins font-bold leading-tight mb-2"
+                  style={{ fontSize: "1.75rem", color: "var(--text)" }}
+                >
+                  {project.name}
+                </h2>
+
+                <p
+                  className="text-[13px] mb-6"
+                  style={{ color: "var(--text-2)" }}
+                >
+                  {project.tagline}
+                </p>
+
+                <div
+                  className="h-px mb-6"
+                  style={{ background: "rgba(0,0,0,0.08)" }}
+                />
+
+                <p
+                  className="text-[13px] leading-[1.85] mb-8"
+                  style={{ color: "var(--text-2)" }}
+                >
+                  {project.description}
+                </p>
+
+                {/* Tech tags */}
+                <div>
+                  <p
+                    className="text-[11px] tracking-widest uppercase mb-3"
+                    style={{ color: "var(--text-3)" }}
                   >
-                    {t}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* Meta row */}
-            <div
-              className="flex items-center gap-10 pt-8"
-              style={{ borderTop: "1px solid var(--border)" }}
-            >
-              <div>
-                <div
-                  className="text-xs tracking-[0.25em] uppercase mb-2"
-                  style={{ color: "var(--text-dim)" }}
-                >
-                  Status
-                </div>
-                <div className="flex items-center gap-2">
-                  <span
-                    className="w-1.5 h-1.5 rounded-full"
-                    style={{ background: statusColors[project.status] }}
-                  />
-                  <span className="text-sm" style={{ color: "var(--text)" }}>
-                    {project.status}
-                  </span>
+                    Built with
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {project.tech.map((t) => (
+                      <span
+                        key={t}
+                        className="glass text-[12px] px-3.5 py-1.5 rounded-full"
+                        style={{ color: "var(--text-2)" }}
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
-              <div>
-                <div
-                  className="text-xs tracking-[0.25em] uppercase mb-2"
-                  style={{ color: "var(--text-dim)" }}
-                >
-                  Year
-                </div>
-                <span className="text-sm" style={{ color: "var(--text)" }}>
-                  {project.year}
-                </span>
-              </div>
-              {project.link && (
-                <a
-                  href={project.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="ml-auto text-xs tracking-[0.25em] uppercase transition-colors duration-300 hover:text-[var(--gold)]"
-                  style={{ color: "var(--text-muted)" }}
-                >
-                  Visit →
-                </a>
-              )}
             </div>
           </motion.div>
         </>
