@@ -50,6 +50,20 @@ body {
   }
 }
 
+/* Sidebar-aware main transitions */
+.main-content {
+  transition: margin-left 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@media (min-width: 1024px) {
+  .main-content.sidebar-open {
+    margin-left: 360px;
+  }
+  .main-content.sidebar-closed {
+    margin-left: 52px;
+  }
+}
+
 /* Mobile horizontal card scroll */
 @media (max-width: 640px) {
   .projects-grid {

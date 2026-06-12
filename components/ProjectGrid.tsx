@@ -3,7 +3,6 @@
 import { useState } from "react";
 import ProjectCard from "./ProjectCard";
 import ProjectModal from "./ProjectModal";
-import CharacterDeck from "./CharacterDeck";
 import { projects, type Project } from "@/lib/projects";
 
 export default function ProjectGrid() {
@@ -11,12 +10,12 @@ export default function ProjectGrid() {
 
   return (
     <>
-      {/* Grid — scroll-snap on mobile for swipe-through feel */}
+      {/* Auto-fill grid: 2 cols when sidebar open, 3 cols when collapsed */}
       <div
         className="projects-grid"
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(2, 1fr)",
+          gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
           gap: 14,
         }}
       >
@@ -29,29 +28,35 @@ export default function ProjectGrid() {
         ))}
       </div>
 
-      {/* Footer — fun copy */}
+      {/* Footer */}
       <div
         style={{
           marginTop: 48,
           paddingBottom: 16,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: 32,
+          textAlign: "center",
         }}
       >
-        <CharacterDeck />
-
         <p
           style={{
             fontSize: 11,
             letterSpacing: "0.12em",
             textTransform: "uppercase",
             color: "var(--text-3)",
-            textAlign: "center",
+            marginBottom: 6,
           }}
         >
           That&apos;s the whole world. Jex went home. Lin&apos;s still at it.
+        </p>
+        <p
+          style={{
+            fontSize: 10,
+            letterSpacing: "0.1em",
+            textTransform: "uppercase",
+            color: "var(--text-3)",
+            opacity: 0.6,
+          }}
+        >
+          Jex &amp; Lin universe →
         </p>
       </div>
 

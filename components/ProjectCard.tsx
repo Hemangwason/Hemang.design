@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default function ProjectCard({ project, onClick }: Props) {
-  const { style, shinePos, onMouseMove, onMouseLeave } = useTilt(11);
+  const { style, shinePos, onMouseMove, onMouseLeave } = useTilt(10);
 
   return (
     <article
@@ -25,8 +25,9 @@ export default function ProjectCard({ project, onClick }: Props) {
         ...style,
       }}
     >
-      {/* Card body — padding-bottom for 1:1.15 ratio */}
-      <div style={{ position: "relative", width: "100%", paddingBottom: "115%" }}>
+      {/* Aspect-ratio box — 1:1.35 portrait */}
+      <div style={{ position: "relative", width: "100%", paddingBottom: "135%" }}>
+
         {/* Gradient background */}
         <div
           style={{
@@ -36,19 +37,18 @@ export default function ProjectCard({ project, onClick }: Props) {
           }}
         />
 
-        {/* Specular shine that follows the mouse */}
+        {/* Specular shine tracking mouse */}
         <div
           style={{
             position: "absolute",
             inset: 0,
-            background: `radial-gradient(circle at ${shinePos.x}% ${shinePos.y}%, rgba(255,255,255,0.10) 0%, transparent 60%)`,
+            background: `radial-gradient(circle at ${shinePos.x}% ${shinePos.y}%, rgba(255,255,255,0.09) 0%, transparent 55%)`,
             pointerEvents: "none",
             zIndex: 2,
-            transition: "background 0.05s linear",
           }}
         />
 
-        {/* Device mockup — centered in upper portion */}
+        {/* Device mockup — fills center, overflows naturally into gradient */}
         <div
           style={{
             position: "absolute",
@@ -56,8 +56,6 @@ export default function ProjectCard({ project, onClick }: Props) {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            paddingTop: "12%",
-            paddingBottom: "28%",
             zIndex: 1,
           }}
         >
@@ -65,10 +63,11 @@ export default function ProjectCard({ project, onClick }: Props) {
             device={project.device}
             gradient={project.gradient}
             videoSrc={project.videoSrc}
+            size="card"
           />
         </div>
 
-        {/* Glass info overlay at bottom */}
+        {/* Glass info overlay */}
         <div
           className="glass-dark"
           style={{
@@ -86,13 +85,13 @@ export default function ProjectCard({ project, onClick }: Props) {
               fontSize: 10,
               letterSpacing: "0.14em",
               textTransform: "uppercase",
-              color: "rgba(255,255,255,0.38)",
+              color: "rgba(255,255,255,0.35)",
               marginBottom: 5,
             }}
           >
             {project.id}&nbsp;&nbsp;·&nbsp;&nbsp;{project.status}
             {project.company && (
-              <span style={{ marginLeft: 6, color: "rgba(255,255,255,0.22)" }}>
+              <span style={{ marginLeft: 6, color: "rgba(255,255,255,0.2)" }}>
                 / {project.company}
               </span>
             )}
@@ -115,7 +114,7 @@ export default function ProjectCard({ project, onClick }: Props) {
             style={{
               fontSize: 12,
               marginTop: 3,
-              color: "rgba(255,255,255,0.5)",
+              color: "rgba(255,255,255,0.48)",
               lineHeight: 1.45,
               overflow: "hidden",
               display: "-webkit-box",

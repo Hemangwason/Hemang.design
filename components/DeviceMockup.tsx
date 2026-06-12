@@ -4,48 +4,57 @@ interface Props {
   device: DeviceType;
   gradient: readonly [string, string];
   videoSrc?: string;
+  size?: "card" | "modal";
 }
 
-export default function DeviceMockup({ device, gradient, videoSrc }: Props) {
+export default function DeviceMockup({ device, gradient, videoSrc, size = "card" }: Props) {
   return device === "phone" ? (
-    <PhoneMockup gradient={gradient} videoSrc={videoSrc} />
+    <PhoneMockup gradient={gradient} videoSrc={videoSrc} size={size} />
   ) : (
-    <LaptopMockup gradient={gradient} videoSrc={videoSrc} />
+    <LaptopMockup gradient={gradient} videoSrc={videoSrc} size={size} />
   );
 }
 
 function PhoneMockup({
   gradient,
   videoSrc,
+  size,
 }: {
   gradient: readonly [string, string];
   videoSrc?: string;
+  size: "card" | "modal";
 }) {
+  const w = size === "modal" ? 140 : 190;
+  const h = size === "modal" ? 280 : 400;
+  const radius = size === "modal" ? 30 : 40;
+  const bezel = size === "modal" ? 5 : 7;
+  const islandW = size === "modal" ? 52 : 70;
+  const islandH = size === "modal" ? 14 : 18;
+
   return (
     <div
       style={{
         position: "relative",
-        width: 120,
-        height: 240,
-        borderRadius: 30,
-        background: "linear-gradient(160deg, #2c2c2e, #1c1c1e)",
+        width: w,
+        height: h,
+        borderRadius: radius,
+        background: "linear-gradient(160deg, #3a3a3c, #1c1c1e)",
         boxShadow:
-          "0 0 0 1px rgba(255,255,255,0.12), 0 24px 64px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1)",
+          "0 0 0 1px rgba(255,255,255,0.14), 0 32px 80px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.12)",
         flexShrink: 0,
         overflow: "hidden",
       }}
     >
-      {/* Bezel inset */}
+      {/* Screen inset */}
       <div
         style={{
           position: "absolute",
-          inset: 6,
-          borderRadius: 24,
+          inset: bezel,
+          borderRadius: radius - bezel,
           overflow: "hidden",
           background: "#000",
         }}
       >
-        {/* Screen content */}
         {videoSrc ? (
           <video
             src={videoSrc}
@@ -61,7 +70,7 @@ function PhoneMockup({
               width: "100%",
               height: "100%",
               background: `linear-gradient(160deg, ${gradient[0]}, ${gradient[1]})`,
-              opacity: 0.7,
+              opacity: 0.65,
             }}
           />
         )}
@@ -73,9 +82,9 @@ function PhoneMockup({
             top: 10,
             left: "50%",
             transform: "translateX(-50%)",
-            width: 52,
-            height: 14,
-            borderRadius: 7,
+            width: islandW,
+            height: islandH,
+            borderRadius: islandH / 2,
             background: "#000",
             zIndex: 10,
           }}
@@ -85,42 +94,42 @@ function PhoneMockup({
         <div
           style={{
             position: "absolute",
-            bottom: 6,
+            bottom: 7,
             left: "50%",
             transform: "translateX(-50%)",
-            width: 36,
+            width: w * 0.28,
             height: 4,
             borderRadius: 2,
-            background: "rgba(255,255,255,0.3)",
+            background: "rgba(255,255,255,0.28)",
             zIndex: 10,
           }}
         />
       </div>
 
-      {/* Side button right */}
+      {/* Right power button */}
       <div
         style={{
           position: "absolute",
-          right: -3,
-          top: 72,
+          right: -2,
+          top: "28%",
           width: 3,
-          height: 36,
+          height: 40,
           borderRadius: "0 2px 2px 0",
-          background: "rgba(255,255,255,0.15)",
+          background: "rgba(255,255,255,0.18)",
         }}
       />
-      {/* Volume buttons left */}
-      {[44, 80].map((top) => (
+      {/* Left volume buttons */}
+      {["20%", "32%"].map((top) => (
         <div
           key={top}
           style={{
             position: "absolute",
-            left: -3,
+            left: -2,
             top,
             width: 3,
-            height: 28,
+            height: 30,
             borderRadius: "2px 0 0 2px",
-            background: "rgba(255,255,255,0.12)",
+            background: "rgba(255,255,255,0.14)",
           }}
         />
       ))}
@@ -131,33 +140,57 @@ function PhoneMockup({
 function LaptopMockup({
   gradient,
   videoSrc,
+  size,
 }: {
   gradient: readonly [string, string];
   videoSrc?: string;
+  size: "card" | "modal";
 }) {
+  const screenW = size === "modal" ? 260 : 330;
+  const screenH = size === "modal" ? 164 : 208;
+  const baseW = screenW + 24;
+  const baseH = 12;
+
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
       {/* Screen lid */}
       <div
         style={{
-          width: 256,
-          height: 160,
-          borderRadius: "10px 10px 0 0",
-          background: "linear-gradient(160deg, #2c2c2e, #1c1c1e)",
+          width: screenW,
+          height: screenH,
+          borderRadius: "12px 12px 0 0",
+          background: "linear-gradient(160deg, #3a3a3c, #1c1c1e)",
           boxShadow:
-            "0 0 0 1px rgba(255,255,255,0.1), 0 -8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08)",
+            "0 0 0 1px rgba(255,255,255,0.12), 0 -12px 48px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.1)",
           position: "relative",
           overflow: "hidden",
         }}
       >
-        {/* Screen bezel */}
+        {/* Camera */}
         <div
           style={{
             position: "absolute",
-            inset: "8px 8px 4px",
-            borderRadius: "4px 4px 2px 2px",
+            top: 6,
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: 5,
+            height: 5,
+            borderRadius: "50%",
+            background: "#3a3a3c",
+            zIndex: 10,
+          }}
+        />
+
+        {/* Screen content */}
+        <div
+          style={{
+            position: "absolute",
+            top: 14,
+            left: 8,
+            right: 8,
+            bottom: 6,
+            borderRadius: "2px 2px 0 0",
             overflow: "hidden",
-            background: "#000",
           }}
         >
           {videoSrc ? (
@@ -175,45 +208,30 @@ function LaptopMockup({
                 width: "100%",
                 height: "100%",
                 background: `linear-gradient(135deg, ${gradient[0]}, ${gradient[1]})`,
-                opacity: 0.7,
+                opacity: 0.65,
               }}
             />
           )}
         </div>
-
-        {/* Camera */}
-        <div
-          style={{
-            position: "absolute",
-            top: 4,
-            left: "50%",
-            transform: "translateX(-50%)",
-            width: 5,
-            height: 5,
-            borderRadius: "50%",
-            background: "#3a3a3c",
-            zIndex: 10,
-          }}
-        />
       </div>
 
-      {/* Hinge line */}
+      {/* Hinge */}
       <div
         style={{
-          width: 256,
+          width: screenW,
           height: 2,
-          background: "rgba(255,255,255,0.06)",
+          background: "rgba(255,255,255,0.05)",
         }}
       />
 
       {/* Keyboard base */}
       <div
         style={{
-          width: 272,
-          height: 10,
-          borderRadius: "0 0 6px 6px",
-          background: "linear-gradient(to bottom, #2a2a2c, #1c1c1e)",
-          boxShadow: "0 6px 20px rgba(0,0,0,0.4)",
+          width: baseW,
+          height: baseH,
+          borderRadius: "0 0 8px 8px",
+          background: "linear-gradient(to bottom, #2c2c2e, #1c1c1e)",
+          boxShadow: "0 8px 24px rgba(0,0,0,0.5)",
         }}
       />
     </div>
