@@ -41,7 +41,7 @@ export const projects: Project[] = [
     year: "2026",
     device: "phone",
     gradient: ["#0d0a1a", "#1a0f2e"],
-    videoSrc: "/sidetake.mp4",
+    videoSrc: "/sidetake-hero.mp4",
     caseStudy: {
       role: "Founding designer",
       client: "Sidetake",
@@ -71,6 +71,22 @@ export const projects: Project[] = [
             "The most valuable creative knowledge lives in people's heads and can't be Googled. Mentorship access is gatekept by where you studied or who you know.",
           why:
             "Browse a real creator's actual day — see exactly how their sessions split between stages. Book a session directly, chat with them about what's working, and access the references and resources they've made available on the platform. The workflow data makes the conversation richer: you can say 'I'm spending 70% of my time in Drift' and have a mentor immediately understand the shape of the problem.",
+        },
+        {
+          num: "04",
+          title: "Record a Focus Block",
+          problem:
+            "Logging creative time usually means picking from a generic list of tasks. That tells you what you did, not what stage of the creative process you were actually in.",
+          why:
+            "Before you start, you name the stage — Reference, Ideation, Execution, Editing, or Drift. You pick the app you'll actually be working in, and Sidetake blocks the ones that would pull you out. The stage choice before you begin changes how you work while you're in it.",
+        },
+        {
+          num: "05",
+          title: "Book a Session",
+          problem:
+            "Booking a mentor is usually an email thread that takes days to schedule and gives you no context about who you're actually talking to.",
+          why:
+            "The calendar shows real availability. Each mentor slot has a focus — Portfolio Review, Craft & Process Deep-Dive, Rate and Time. You see exactly what the session covers before you book. No cold email, no back-and-forth, no wondering if this person's workflow is anything like yours.",
         },
       ],
     },

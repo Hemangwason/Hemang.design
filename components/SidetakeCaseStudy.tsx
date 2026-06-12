@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
+import { X, ExternalLink } from "lucide-react";
 import Image from "next/image";
 import type { Project } from "@/lib/projects";
 
@@ -48,6 +48,19 @@ function PhoneShell({
         }}
       >
         {children}
+        {/* Top fade — masks content that would clash with the dynamic island */}
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            height: 32,
+            background: "linear-gradient(to bottom, #000 30%, transparent)",
+            zIndex: 5,
+            pointerEvents: "none",
+          }}
+        />
       </div>
       {/* Dynamic island */}
       <div
@@ -71,7 +84,13 @@ function PhoneShell({
 function SectionPhone({ src, alt }: { src: string; alt: string }) {
   return (
     <PhoneShell w={148} h={296} radius={26} bezel={6} islandW={46} islandH={12}>
-      <Image src={src} alt={alt} fill style={{ objectFit: "cover", objectPosition: "top" }} sizes="148px" />
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        style={{ objectFit: "cover", objectPosition: "top" }}
+        sizes="148px"
+      />
     </PhoneShell>
   );
 }
@@ -79,7 +98,15 @@ function SectionPhone({ src, alt }: { src: string; alt: string }) {
 /* ─── Hero fan ─── */
 function HeroFan({ videoSrc }: { videoSrc?: string }) {
   return (
-    <div style={{ position: "relative", height: 340, display: "flex", alignItems: "flex-end", justifyContent: "center" }}>
+    <div
+      style={{
+        position: "relative",
+        height: 340,
+        display: "flex",
+        alignItems: "flex-end",
+        justifyContent: "center",
+      }}
+    >
       {/* Left — focus block screen */}
       <div
         style={{
@@ -92,7 +119,13 @@ function HeroFan({ videoSrc }: { videoSrc?: string }) {
         }}
       >
         <PhoneShell w={148} h={296} radius={26} bezel={6} islandW={46} islandH={12}>
-          <Image src="/screenshots/st-focus.png" alt="Focus block" fill style={{ objectFit: "cover", objectPosition: "top" }} sizes="148px" />
+          <Image
+            src="/screenshots/st-focus.png"
+            alt="Focus block"
+            fill
+            style={{ objectFit: "cover", objectPosition: "top" }}
+            sizes="148px"
+          />
         </PhoneShell>
       </div>
 
@@ -108,7 +141,13 @@ function HeroFan({ videoSrc }: { videoSrc?: string }) {
         }}
       >
         <PhoneShell w={148} h={296} radius={26} bezel={6} islandW={46} islandH={12}>
-          <Image src="/screenshots/st-book.png" alt="Book a session" fill style={{ objectFit: "cover", objectPosition: "top" }} sizes="148px" />
+          <Image
+            src="/screenshots/st-book.png"
+            alt="Book a session"
+            fill
+            style={{ objectFit: "cover", objectPosition: "top" }}
+            sizes="148px"
+          />
         </PhoneShell>
       </div>
 
@@ -133,7 +172,13 @@ function HeroFan({ videoSrc }: { videoSrc?: string }) {
               style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
             />
           ) : (
-            <div style={{ width: "100%", height: "100%", background: "linear-gradient(160deg, #1a0f2e, #0d0a1a)" }} />
+            <div
+              style={{
+                width: "100%",
+                height: "100%",
+                background: "linear-gradient(160deg, #1a0f2e, #0d0a1a)",
+              }}
+            />
           )}
           {/* Home indicator */}
           <div
@@ -155,11 +200,13 @@ function HeroFan({ videoSrc }: { videoSrc?: string }) {
   );
 }
 
-/* ─── Section phone→screenshot mapping ─── */
+/* ─── Section screenshot mapping (all 5 screens) ─── */
 const SECTION_SCREENS = [
   { src: "/screenshots/st-home.png",   alt: "Sidetake home screen" },
   { src: "/screenshots/st-active.png", alt: "Active project detail" },
   { src: "/screenshots/st-learn.png",  alt: "Learn from the Best" },
+  { src: "/screenshots/st-focus.png",  alt: "Record a Focus Block" },
+  { src: "/screenshots/st-book.png",   alt: "Book a session" },
 ];
 
 /* ─── Main component ─── */
@@ -224,7 +271,8 @@ export default function SidetakeCaseStudy({ project, onClose }: Props) {
                 width: "min(720px, 94vw)",
                 borderRadius: 28,
                 background: "#0d0b14",
-                boxShadow: "0 48px 120px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.07)",
+                boxShadow:
+                  "0 48px 120px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.07)",
                 overflow: "hidden",
                 flexShrink: 0,
                 alignSelf: "flex-start",
@@ -323,7 +371,14 @@ export default function SidetakeCaseStudy({ project, onClose }: Props) {
                 >
                   {project.name}
                 </h1>
-                <p style={{ fontSize: 16, color: "rgba(255,255,255,0.42)", marginBottom: 40, letterSpacing: "-0.01em" }}>
+                <p
+                  style={{
+                    fontSize: 16,
+                    color: "rgba(255,255,255,0.42)",
+                    marginBottom: 40,
+                    letterSpacing: "-0.01em",
+                  }}
+                >
                   {project.tagline}
                 </p>
 
@@ -337,16 +392,19 @@ export default function SidetakeCaseStudy({ project, onClose }: Props) {
                     marginBottom: 40,
                   }}
                 >
-                  {[
-                    ["ROLE", cs.role],
-                    ["CLIENT", cs.client],
-                    ["YEAR", project.year],
-                  ].map(([label, val], idx) => (
+                  {(
+                    [
+                      ["ROLE", cs.role],
+                      ["CLIENT", cs.client],
+                      ["YEAR", project.year],
+                    ] as [string, string][]
+                  ).map(([label, val], idx) => (
                     <div
                       key={label}
                       style={{
                         padding: "20px 0",
-                        borderLeft: idx > 0 ? "1px solid rgba(255,255,255,0.07)" : "none",
+                        borderLeft:
+                          idx > 0 ? "1px solid rgba(255,255,255,0.07)" : "none",
                         paddingLeft: idx > 0 ? 24 : 0,
                       }}
                     >
@@ -361,31 +419,46 @@ export default function SidetakeCaseStudy({ project, onClose }: Props) {
                       >
                         {label}
                       </div>
-                      <div style={{ fontSize: 15, fontWeight: 600, color: "#fff" }}>{val}</div>
+                      <div style={{ fontSize: 15, fontWeight: 600, color: "#fff" }}>
+                        {val}
+                      </div>
                     </div>
                   ))}
                 </div>
 
                 {/* Intro */}
-                <p style={{ fontSize: 15, lineHeight: 1.9, color: "rgba(255,255,255,0.55)", marginBottom: 60 }}>
+                <p
+                  style={{
+                    fontSize: 15,
+                    lineHeight: 1.9,
+                    color: "rgba(255,255,255,0.55)",
+                    marginBottom: 60,
+                  }}
+                >
                   {cs.intro}
                 </p>
               </div>
 
-              {/* Case study sections */}
+              {/* Case study sections — all 5 screens */}
               {cs.sections.map((section, i) => {
                 const screen = SECTION_SCREENS[i] ?? SECTION_SCREENS[0];
                 return (
                   <div
                     key={section.num}
                     style={{
-                      padding: "0 52px 64px",
+                      padding: "52px 52px 64px",
                       borderTop: "1px solid rgba(255,255,255,0.05)",
-                      paddingTop: 52,
                     }}
                   >
                     {/* Heading */}
-                    <div style={{ display: "flex", alignItems: "baseline", gap: 12, marginBottom: 36 }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "baseline",
+                        gap: 12,
+                        marginBottom: 36,
+                      }}
+                    >
                       <span
                         style={{
                           fontSize: 12,
@@ -398,7 +471,12 @@ export default function SidetakeCaseStudy({ project, onClose }: Props) {
                       </span>
                       <h2
                         className="font-poppins"
-                        style={{ fontSize: 22, fontWeight: 700, color: "#fff", letterSpacing: "-0.02em" }}
+                        style={{
+                          fontSize: 22,
+                          fontWeight: 700,
+                          color: "#fff",
+                          letterSpacing: "-0.02em",
+                        }}
                       >
                         {section.title}
                       </h2>
@@ -406,11 +484,17 @@ export default function SidetakeCaseStudy({ project, onClose }: Props) {
 
                     {/* Two-column */}
                     <div style={{ display: "flex", gap: 40, alignItems: "flex-start" }}>
-                      {/* Real screenshot in phone */}
                       <SectionPhone src={screen.src} alt={screen.alt} />
 
                       {/* Text blocks */}
-                      <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 12 }}>
+                      <div
+                        style={{
+                          flex: 1,
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: 12,
+                        }}
+                      >
                         <div
                           style={{
                             padding: "20px 22px",
@@ -430,7 +514,13 @@ export default function SidetakeCaseStudy({ project, onClose }: Props) {
                           >
                             PROBLEM
                           </div>
-                          <p style={{ fontSize: 14, lineHeight: 1.75, color: "rgba(255,255,255,0.7)" }}>
+                          <p
+                            style={{
+                              fontSize: 14,
+                              lineHeight: 1.75,
+                              color: "rgba(255,255,255,0.7)",
+                            }}
+                          >
                             {section.problem}
                           </p>
                         </div>
@@ -454,7 +544,13 @@ export default function SidetakeCaseStudy({ project, onClose }: Props) {
                           >
                             WHY THIS WAY
                           </div>
-                          <p style={{ fontSize: 14, lineHeight: 1.75, color: "rgba(255,255,255,0.6)" }}>
+                          <p
+                            style={{
+                              fontSize: 14,
+                              lineHeight: 1.75,
+                              color: "rgba(255,255,255,0.6)",
+                            }}
+                          >
                             {section.why}
                           </p>
                         </div>
@@ -463,6 +559,126 @@ export default function SidetakeCaseStudy({ project, onClose }: Props) {
                   </div>
                 );
               })}
+
+              {/* In-line walkthrough video */}
+              <div
+                style={{
+                  padding: "0 52px 64px",
+                  borderTop: "1px solid rgba(255,255,255,0.05)",
+                  paddingTop: 52,
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: 9,
+                    letterSpacing: "0.14em",
+                    textTransform: "uppercase",
+                    color: "rgba(255,255,255,0.25)",
+                    marginBottom: 16,
+                  }}
+                >
+                  Walkthrough
+                </div>
+                <div
+                  style={{
+                    borderRadius: 16,
+                    overflow: "hidden",
+                    border: "1px solid rgba(255,255,255,0.07)",
+                    background: "#000",
+                    aspectRatio: "9/16",
+                    maxWidth: 280,
+                  }}
+                >
+                  <video
+                    src="/sidetake.mp4"
+                    controls
+                    loop
+                    playsInline
+                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                  />
+                </div>
+              </div>
+
+              {/* Figma / prototype CTA */}
+              <div
+                style={{
+                  padding: "0 52px 52px",
+                  borderTop: "1px solid rgba(255,255,255,0.05)",
+                  paddingTop: 40,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 12,
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: 9,
+                    letterSpacing: "0.14em",
+                    textTransform: "uppercase",
+                    color: "rgba(255,255,255,0.25)",
+                    marginBottom: 4,
+                  }}
+                >
+                  Explore
+                </div>
+                <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+                  {/* Replace href with actual Figma prototype URL */}
+                  <a
+                    href="https://www.figma.com/proto/REPLACE_WITH_ACTUAL_LINK"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 8,
+                      padding: "12px 20px",
+                      borderRadius: 100,
+                      background: "rgba(167,139,250,0.1)",
+                      border: "1px solid rgba(167,139,250,0.25)",
+                      color: "rgba(167,139,250,0.9)",
+                      fontSize: 13,
+                      fontWeight: 600,
+                      textDecoration: "none",
+                      letterSpacing: "-0.01em",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <svg width="14" height="14" viewBox="0 0 38 57" fill="none" style={{ flexShrink: 0 }}>
+                      <path d="M19 28.5C19 25.9 20.07 23.58 21.81 21.94C23.54 20.3 25.9 19.25 28.5 19.25C31.1 19.25 33.46 20.3 35.19 21.94C36.93 23.58 38 25.9 38 28.5C38 31.1 36.93 33.42 35.19 35.06C33.46 36.7 31.1 37.75 28.5 37.75C25.9 37.75 23.54 36.7 21.81 35.06C20.07 33.42 19 31.1 19 28.5Z" fill="rgba(167,139,250,0.8)"/>
+                      <path d="M0 47.5C0 44.9 1.07 42.58 2.81 40.94C4.54 39.3 6.9 38.25 9.5 38.25H19V47.5C19 50.1 17.93 52.42 16.19 54.06C14.46 55.7 12.1 56.75 9.5 56.75C6.9 56.75 4.54 55.7 2.81 54.06C1.07 52.42 0 50.1 0 47.5Z" fill="rgba(167,139,250,0.8)"/>
+                      <path d="M19 0.25V19.25H28.5C31.1 19.25 33.46 18.2 35.19 16.56C36.93 14.92 38 12.6 38 10C38 7.4 36.93 5.08 35.19 3.44C33.46 1.8 31.1 0.75 28.5 0.75L19 0.25Z" fill="rgba(167,139,250,0.8)"/>
+                      <path d="M0 10C0 12.6 1.07 14.92 2.81 16.56C4.54 18.2 6.9 19.25 9.5 19.25H19V0.25H9.5C6.9 0.25 4.54 1.3 2.81 2.94C1.07 4.58 0 6.9 0 10Z" fill="rgba(167,139,250,0.8)"/>
+                      <path d="M0 28.5C0 31.1 1.07 33.42 2.81 35.06C4.54 36.7 6.9 37.75 9.5 37.75H19V19.25H9.5C6.9 19.25 4.54 20.3 2.81 21.94C1.07 23.58 0 25.9 0 28.5Z" fill="rgba(167,139,250,0.8)"/>
+                    </svg>
+                    View in Figma
+                    <ExternalLink size={11} style={{ opacity: 0.6 }} />
+                  </a>
+
+                  <a
+                    href="https://www.sidetake.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 8,
+                      padding: "12px 20px",
+                      borderRadius: 100,
+                      background: "rgba(255,255,255,0.04)",
+                      border: "1px solid rgba(255,255,255,0.1)",
+                      color: "rgba(255,255,255,0.55)",
+                      fontSize: 13,
+                      fontWeight: 600,
+                      textDecoration: "none",
+                      letterSpacing: "-0.01em",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Visit Site
+                    <ExternalLink size={11} style={{ opacity: 0.5 }} />
+                  </a>
+                </div>
+              </div>
 
               {/* Tech footer */}
               <div
