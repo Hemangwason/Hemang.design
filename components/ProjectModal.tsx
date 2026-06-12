@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import DeviceMockup from "./DeviceMockup";
+import SidetakeCaseStudy from "./SidetakeCaseStudy";
 import type { Project } from "@/lib/projects";
 
 interface Props {
@@ -11,6 +12,10 @@ interface Props {
 }
 
 export default function ProjectModal({ project, onClose }: Props) {
+  if (project?.caseStudy) {
+    return <SidetakeCaseStudy project={project} onClose={onClose} />;
+  }
+
   return (
     <AnimatePresence>
       {project && (
