@@ -140,8 +140,8 @@ export default function Sidebar({ open }: Props) {
             ))}
           </div>
 
-          {/* Character deck */}
-          <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
+          {/* Character deck — pushed toward bottom */}
+          <div style={{ flex: 1, display: "flex", alignItems: "flex-end", justifyContent: "center", paddingBottom: 28 }}>
             <CharacterDeck />
           </div>
 

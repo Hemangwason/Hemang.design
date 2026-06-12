@@ -13,51 +13,74 @@ const cards = [
   { src: "/characters/winter.png", label: "Lin" },
 ];
 
-const W = 110;
-const H = 165;
+const W = 108;
+const H = 162;
+// Spread per card when fanned. Container width = W + (count-1)*SPREAD
+// so all cards stay inside the container — no sidebar overflow.
+const SPREAD = 22;
+const COUNT = cards.length;
+const CONTAINER_W = W + (COUNT - 1) * SPREAD; // 108 + 6*22 = 240px
+const BASE_LEFT = (CONTAINER_W - W) / 2;       // center anchor = 66px
 
 export default function CharacterDeck() {
   const [open, setOpen] = useState(false);
-  const [flipped, setFlipped] = useState<number | null>(null);
-
-  const count = cards.length;
+  const [hovered, setHovered] = useState<number | null>(null);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 20 }}>
-      <p style={{ fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--text-3)" }}>
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+      <p
+        style={{
+          fontSize: 10,
+          letterSpacing: "0.12em",
+          textTransform: "uppercase",
+          color: "var(--text-3)",
+          marginBottom: 24,
+        }}
+      >
         Jex &amp; Lin universe
       </p>
 
-      {/* Deck */}
+      {/* Container is exactly wide enough for the full open spread */}
       <div
-        style={{ position: "relative", width: W, height: H, cursor: "pointer" }}
+        style={{
+          position: "relative",
+          width: CONTAINER_W,
+          height: H + 28, // room for lift on hover
+          cursor: "pointer",
+        }}
         onMouseEnter={() => setOpen(true)}
-        onMouseLeave={() => { setOpen(false); setFlipped(null); }}
+        onMouseLeave={() => {
+          setOpen(false);
+          setHovered(null);
+        }}
       >
         {cards.map((card, i) => {
-          const spread = open ? (i - (count - 1) / 2) * 38 : (i - (count - 1) / 2) * 3;
-          const rotate = open ? (i - (count - 1) / 2) * 11 : (i - (count - 1) / 2) * 1.5;
-          const lift = flipped === i ? -24 : open ? -(i * 3) : 0;
-          const scale = flipped === i ? 1.1 : 1;
+          const offset = i - (COUNT - 1) / 2; // −3 … +3
+          const spreadX = open ? offset * SPREAD : offset * 2.5;
+          const rotate = open ? offset * 9 : offset * 2;
+          const lift = hovered === i ? -20 : 0;
+          const scale = hovered === i ? 1.07 : 1;
+
           return (
             <div
               key={card.src}
-              onMouseEnter={() => setFlipped(i)}
-              onMouseLeave={() => setFlipped(null)}
+              onMouseEnter={() => setHovered(i)}
+              onMouseLeave={() => setHovered(null)}
               style={{
                 position: "absolute",
-                top: 0,
-                left: 0,
+                top: 14, // vertical room for lift
+                left: BASE_LEFT,
                 width: W,
                 height: H,
-                borderRadius: 14,
+                borderRadius: 12,
                 overflow: "hidden",
                 transformOrigin: "bottom center",
-                transform: `translateX(${spread}px) translateY(${lift}px) rotate(${rotate}deg) scale(${scale})`,
-                transition: "transform 0.35s cubic-bezier(0.23, 1, 0.32, 1)",
+                transform: `translateX(${spreadX}px) translateY(${lift}px) rotate(${rotate}deg) scale(${scale})`,
+                transition: "transform 0.38s cubic-bezier(0.23, 1, 0.32, 1)",
                 zIndex: i,
-                boxShadow: "0 6px 24px rgba(0,0,0,0.18), 0 1px 4px rgba(0,0,0,0.1)",
-                border: "1px solid rgba(255,255,255,0.65)",
+                boxShadow:
+                  "0 6px 22px rgba(0,0,0,0.18), 0 1px 4px rgba(0,0,0,0.08)",
+                border: "1px solid rgba(255,255,255,0.68)",
               }}
             >
               <Image
@@ -65,18 +88,25 @@ export default function CharacterDeck() {
                 alt={card.label}
                 fill
                 style={{ objectFit: "cover", objectPosition: "top" }}
-                sizes="110px"
+                sizes="108px"
               />
             </div>
           );
         })}
       </div>
 
-      {open && (
-        <p style={{ fontSize: 11, color: "var(--text-3)", letterSpacing: "0.04em" }}>
-          7 chapters. One world.
-        </p>
-      )}
+      <p
+        style={{
+          fontSize: 10,
+          color: "var(--text-3)",
+          letterSpacing: "0.06em",
+          marginTop: 18,
+          opacity: open ? 1 : 0,
+          transition: "opacity 0.2s ease",
+        }}
+      >
+        7 chapters. One world.
+      </p>
     </div>
   );
 }
