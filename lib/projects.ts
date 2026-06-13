@@ -132,6 +132,31 @@ export const projects: Project[] = [
   },
   {
     id: "02",
+    slug: "tripadvisor-ai",
+    name: "TripAdvisor",
+    emoji: "✈️",
+    tagline: "A new imagination of TripAdvisor's AI",
+    blurb:
+      "A complete rethink of how AI-assisted travel planning should feel — five questions replace a search box, a live agent pre-holds restaurants and hotels before you decide, and a drafted weekend that explains every choice it made.",
+    writeup:
+      "The problem with AI on most travel platforms isn't the data — it's the shape of the interaction. Search still shoulders every decision. 1.2 billion reviews, and you're still responsible for knowing what to ask for. This concept inverts the model: five conversational questions replace the search bar, a live agent reads your input and adjusts in real time, and a full weekend is drafted before a single filter gets touched. The brief is designed to feel like talking, not querying. You type 'actually coming from Delhi, no late nights, budget more like 40k' and the plan responds in place — origin switched, late-night slots removed, hotel remapped. The agent announces every change it makes, so trust is earned through transparency rather than assumed. The harder problem was the confirmation step. Most travel products reduce this to a checkout form, which strips the moment of any sense of curation. Here, confirmation is a full view of what the agent has already held on your behalf — restaurant tables, a sunset cruise, a hotel suite — each tagged with its reservation status (HELD, RESERVE, IN-STAY, FREE) and protected by a 48h cancellation window. One button confirms everything at once. Post-booking, the AI doesn't disappear. It surfaces the open slots it noticed in your plan and explains precisely why each suggestion fits: 'because Saturday evening is your only open window and you're a group of 4.' Not a recommendation engine. An agent that reasons out loud.",
+    tags: ["AI", "Travel", "UX Concept"],
+    role: "Concept designer",
+    client: "TripAdvisor",
+    year: "2026",
+    device: "laptop",
+    gradient: ["#0a3d2d", "#1a6b4a"],
+    thumbnailVideo: "/projects/thumbs/tripadvisor-ai.mp4",
+    thumbnailBg: "#f2faf6",
+    mastheadVideo: "/projects/tripadvisor-ai.mp4",
+    mastheadBg: "#f2faf6",
+    modalBg: "rgba(6,18,14,0.96)",
+    status: "live",
+    platform: "Website",
+    liveUrl: "https://tripadvisor-agentic.vercel.app/",
+  },
+  {
+    id: "03",
     slug: "sidetalk",
     name: "SideTalk",
     emoji: "💬",
@@ -155,7 +180,7 @@ export const projects: Project[] = [
     platform: "Website",
   },
   {
-    id: "03",
+    id: "04",
     slug: "boomerang",
     name: "Boomerang",
     emoji: "🪃",
@@ -179,7 +204,7 @@ export const projects: Project[] = [
     platform: "Website",
   },
   {
-    id: "04",
+    id: "05",
     slug: "jexlin",
     name: "Jexlin",
     emoji: "👕",
@@ -204,7 +229,7 @@ export const projects: Project[] = [
     liveUrl: "https://jexlindesigns.com/",
   },
   {
-    id: "05",
+    id: "06",
     slug: "crater",
     name: "Crater",
     emoji: "🛡️",
@@ -229,7 +254,7 @@ export const projects: Project[] = [
     liveUrl: "https://chromewebstore.google.com/detail/jcieelfbdidgfhbaonhhjlljfkmmhnah",
   },
   {
-    id: "06",
+    id: "07",
     slug: "sid-voice-host",
     name: "Sid Voice Host",
     emoji: "🎙️",
