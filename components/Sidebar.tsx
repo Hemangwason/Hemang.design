@@ -99,9 +99,15 @@ function SidebarContent({ onClose }: { onClose?: () => void }) {
         full AI stack at a blank canvas and ships. Built with{" "}
         <strong style={{ color: "var(--text)", fontWeight: 600 }}>Claude</strong>,{" "}
         <strong style={{ color: "var(--text)", fontWeight: 600 }}>Antigravity</strong>,{" "}
-        <strong style={{ color: "var(--text)", fontWeight: 600 }}>Cursor</strong>, and{" "}
-        <strong style={{ color: "var(--text)", fontWeight: 600 }}>Claude Code</strong> — from blank
-        canvas to shipped in a single session.
+        <strong style={{ color: "var(--text)", fontWeight: 600 }}>Cursor</strong>,{" "}
+        <strong style={{ color: "var(--text)", fontWeight: 600 }}>Claude Code</strong>,{" "}
+        <strong style={{ color: "var(--text)", fontWeight: 600 }}>v0</strong>,{" "}
+        <strong style={{ color: "var(--text)", fontWeight: 600 }}>Midjourney</strong>,{" "}
+        <strong style={{ color: "var(--text)", fontWeight: 600 }}>Perplexity</strong>,{" "}
+        <strong style={{ color: "var(--text)", fontWeight: 600 }}>Lovable</strong>,{" "}
+        <strong style={{ color: "var(--text)", fontWeight: 600 }}>Runway</strong>, etc. — from blank
+        canvas to shipped in a single session. Spent the past week figuring out how to build my own
+        AI orchestration.
       </p>
 
       {/* Portfolio link — highlighted */}
