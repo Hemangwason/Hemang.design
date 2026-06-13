@@ -154,6 +154,48 @@ export const projects: Project[] = [
     status: "live",
     platform: "Website",
     liveUrl: "https://tripadvisor-agentic.vercel.app/",
+    screens: [
+      {
+        src: "/projects/tripadvisor-ai-screens/search.png",
+        title: "Redesigned Search Entry",
+        problem:
+          "The search box is the entire interface on most travel platforms. You type a city, stare at a blank results page, and take on every decision from there. The AI is buried three taps in, if it exists at all.",
+        rationale:
+          "The 'Where to?' screen resets the starting point. Instead of a generic search field, the interface opens with a prompt that signals what kind of input it's waiting for — conversational, not structured. The visual weight is on the destination, not the filter UI, so the intent feels like planning rather than querying.",
+      },
+      {
+        src: "/projects/tripadvisor-ai-screens/brief.png",
+        title: "The Five-Question Brief",
+        problem:
+          "Pre-trip planning is spread across destination, dates, group size, budget, and vibe — five separate fields, five separate decisions. Every AI travel tool I looked at either ignored this or collapsed it into a form that still felt like a form.",
+        rationale:
+          "Five conversational questions replace all of that. The agent reads them collectively — not as independent filters — so 'coming from Delhi, no late nights, budget around 40k' updates the entire plan at once. The brief is designed to feel like talking to someone who already knows what you're trying to do, not a schema you're populating.",
+      },
+      {
+        src: "/projects/tripadvisor-ai-screens/itinerary.png",
+        title: "AI-Drafted Weekend",
+        problem:
+          "AI on most travel platforms returns a ranked list of suggestions. You still have to assemble the actual weekend yourself — decide the order, check availability, cross-reference times. The AI helps you pick, not plan.",
+        rationale:
+          "The agent returns a full drafted timeline before you've touched a filter. Accommodation, meals, activities — everything sequenced and reasoned. Edits happen in natural language mid-plan: change the origin city, drop the late-night slot, shift the budget. The agent announces every adjustment it makes, so you're not wondering why the hotel changed — trust is built through transparency, not assumed.",
+      },
+      {
+        src: "/projects/tripadvisor-ai-screens/confirm.png",
+        title: "Pre-Held Confirmation",
+        problem:
+          "Confirmation in most travel products is a checkout form. Everything you care about — the actual experience — is already collapsed by that point. The moment you confirm feels like admin, not a decision.",
+        rationale:
+          "This screen shows what the agent has already done on your behalf before you decide. Every item — the restaurant table, the sunset cruise, the hotel suite — is tagged with its hold status (HELD, RESERVE, IN-STAY, FREE) and backed by a 48h cancellation window. You're confirming a curation, not approving a transaction. One button books everything at once.",
+      },
+      {
+        src: "/projects/tripadvisor-ai-screens/booked.png",
+        title: "You're Booked — What's Still Open",
+        problem:
+          "Most travel apps go silent the moment the booking completes. The AI that helped you plan disappears the second it's no longer needed to close a sale.",
+        rationale:
+          "Post-booking, the agent doesn't exit — it surfaces the open windows it noticed while building the plan and explains exactly why each suggestion fits: 'because Saturday evening is your only open window and you're a group of 4.' Not a recommendation engine pushing upsells. An agent that keeps reasoning out loud, even after you've paid.",
+      },
+    ],
   },
   {
     id: "03",
