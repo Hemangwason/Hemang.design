@@ -488,88 +488,168 @@ export default function GroundModal({ project, onClose }: Props) {
                         </div>
 
                         <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-                          {project.screens.map((screen, i) => (
-                            <div
-                              key={screen.src}
-                              style={{
-                                display: "grid",
-                                gridTemplateColumns: "min(124px, 36%) 1fr",
-                                gap: 16,
-                                alignItems: "flex-start",
-                                padding: "18px",
-                                borderRadius: 20,
-                                ...glassCard,
-                              }}
-                            >
+                          {project.screens.map((screen, i) =>
+                            project.device === "laptop" ? (
+                              /* ── Laptop screens: full-width image stacked above text ── */
                               <div
+                                key={screen.src}
                                 style={{
-                                  position: "relative",
-                                  width: "min(124px, 36%)",
-                                  aspectRatio: "124 / 264",
                                   borderRadius: 20,
                                   overflow: "hidden",
-                                  flexShrink: 0,
-                                  boxShadow:
-                                    "0 16px 40px rgba(0,0,0,0.52), 0 0 0 1px rgba(255,255,255,0.07)",
+                                  ...glassCard,
                                 }}
                               >
-                                <Image
-                                  src={screen.src}
-                                  alt={screen.title}
-                                  fill
-                                  loading="lazy"
-                                  style={{ objectFit: "contain", objectPosition: "top" }}
-                                  sizes="124px"
-                                />
-                              </div>
+                                {/* Full-width 16:9 image */}
+                                <div
+                                  style={{
+                                    position: "relative",
+                                    width: "100%",
+                                    aspectRatio: "16 / 9",
+                                    background: "rgba(0,0,0,0.3)",
+                                    overflow: "hidden",
+                                  }}
+                                >
+                                  <Image
+                                    src={screen.src}
+                                    alt={screen.title}
+                                    fill
+                                    loading="lazy"
+                                    style={{ objectFit: "cover", objectPosition: "top center" }}
+                                    sizes="(max-width: 768px) 94vw, 640px"
+                                  />
+                                </div>
 
-                              <div>
-                                <p
-                                  style={{
-                                    fontSize: 10,
-                                    letterSpacing: "0.12em",
-                                    textTransform: "uppercase",
-                                    color: "rgba(255,255,255,0.22)",
-                                    marginBottom: 7,
-                                  }}
-                                >
-                                  {String(i + 1).padStart(2, "0")}
-                                </p>
-                                <h3
-                                  style={{
-                                    fontSize: 15,
-                                    fontWeight: 600,
-                                    color: "#fff",
-                                    letterSpacing: "-0.02em",
-                                    lineHeight: 1.3,
-                                    marginBottom: 14,
-                                  }}
-                                >
-                                  {screen.title}
-                                </h3>
-                                <p
-                                  style={{
-                                    fontSize: 12,
-                                    lineHeight: 1.75,
-                                    color: "rgba(255,255,255,0.34)",
-                                    marginBottom: 10,
-                                    fontStyle: "italic",
-                                  }}
-                                >
-                                  {screen.problem}
-                                </p>
-                                <p
-                                  style={{
-                                    fontSize: 12,
-                                    lineHeight: 1.75,
-                                    color: "rgba(255,255,255,0.55)",
-                                  }}
-                                >
-                                  {screen.rationale}
-                                </p>
+                                {/* Text below */}
+                                <div style={{ padding: "18px 20px 20px" }}>
+                                  <p
+                                    style={{
+                                      fontSize: 10,
+                                      letterSpacing: "0.12em",
+                                      textTransform: "uppercase",
+                                      color: "rgba(255,255,255,0.22)",
+                                      marginBottom: 7,
+                                    }}
+                                  >
+                                    {String(i + 1).padStart(2, "0")}
+                                  </p>
+                                  <h3
+                                    style={{
+                                      fontSize: 15,
+                                      fontWeight: 600,
+                                      color: "#fff",
+                                      letterSpacing: "-0.02em",
+                                      lineHeight: 1.3,
+                                      marginBottom: 14,
+                                    }}
+                                  >
+                                    {screen.title}
+                                  </h3>
+                                  <p
+                                    style={{
+                                      fontSize: 12,
+                                      lineHeight: 1.75,
+                                      color: "rgba(255,255,255,0.34)",
+                                      marginBottom: 10,
+                                      fontStyle: "italic",
+                                    }}
+                                  >
+                                    {screen.problem}
+                                  </p>
+                                  <p
+                                    style={{
+                                      fontSize: 12,
+                                      lineHeight: 1.75,
+                                      color: "rgba(255,255,255,0.55)",
+                                    }}
+                                  >
+                                    {screen.rationale}
+                                  </p>
+                                </div>
                               </div>
-                            </div>
-                          ))}
+                            ) : (
+                              /* ── Phone screens: portrait image beside text ── */
+                              <div
+                                key={screen.src}
+                                style={{
+                                  display: "grid",
+                                  gridTemplateColumns: "min(124px, 36%) 1fr",
+                                  gap: 16,
+                                  alignItems: "flex-start",
+                                  padding: "18px",
+                                  borderRadius: 20,
+                                  ...glassCard,
+                                }}
+                              >
+                                <div
+                                  style={{
+                                    position: "relative",
+                                    width: "min(124px, 36%)",
+                                    aspectRatio: "124 / 264",
+                                    borderRadius: 20,
+                                    overflow: "hidden",
+                                    flexShrink: 0,
+                                    boxShadow:
+                                      "0 16px 40px rgba(0,0,0,0.52), 0 0 0 1px rgba(255,255,255,0.07)",
+                                  }}
+                                >
+                                  <Image
+                                    src={screen.src}
+                                    alt={screen.title}
+                                    fill
+                                    loading="lazy"
+                                    style={{ objectFit: "contain", objectPosition: "top" }}
+                                    sizes="124px"
+                                  />
+                                </div>
+
+                                <div>
+                                  <p
+                                    style={{
+                                      fontSize: 10,
+                                      letterSpacing: "0.12em",
+                                      textTransform: "uppercase",
+                                      color: "rgba(255,255,255,0.22)",
+                                      marginBottom: 7,
+                                    }}
+                                  >
+                                    {String(i + 1).padStart(2, "0")}
+                                  </p>
+                                  <h3
+                                    style={{
+                                      fontSize: 15,
+                                      fontWeight: 600,
+                                      color: "#fff",
+                                      letterSpacing: "-0.02em",
+                                      lineHeight: 1.3,
+                                      marginBottom: 14,
+                                    }}
+                                  >
+                                    {screen.title}
+                                  </h3>
+                                  <p
+                                    style={{
+                                      fontSize: 12,
+                                      lineHeight: 1.75,
+                                      color: "rgba(255,255,255,0.34)",
+                                      marginBottom: 10,
+                                      fontStyle: "italic",
+                                    }}
+                                  >
+                                    {screen.problem}
+                                  </p>
+                                  <p
+                                    style={{
+                                      fontSize: 12,
+                                      lineHeight: 1.75,
+                                      color: "rgba(255,255,255,0.55)",
+                                    }}
+                                  >
+                                    {screen.rationale}
+                                  </p>
+                                </div>
+                              </div>
+                            )
+                          )}
                         </div>
                       </div>
                     )}
