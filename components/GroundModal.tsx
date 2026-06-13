@@ -71,9 +71,10 @@ export default function GroundModal({ project, onClose }: Props) {
                 position: "fixed",
                 inset: 0,
                 zIndex: 100,
-                background: "rgba(4,4,6,0.80)",
-                backdropFilter: "blur(22px)",
-                WebkitBackdropFilter: "blur(22px)",
+                // No backdropFilter here either — any blur in the compositor
+                // stack (backdrop OR panel) causes a black-flash on scroll.
+                // Higher opacity compensates for the lost blur effect.
+                background: "rgba(4,4,6,0.88)",
               }}
             />
 
@@ -151,8 +152,7 @@ export default function GroundModal({ project, onClose }: Props) {
                     overflowX: "hidden",
                     flex: 1,
                     overscrollBehavior: "contain",
-                    // Own GPU layer — keeps scroll composited independently of parent
-                    transform: "translateZ(0)",
+                    willChange: "scroll-position",
                     WebkitOverflowScrolling: "touch" as React.CSSProperties["WebkitOverflowScrolling"],
                     scrollbarWidth: "thin",
                     scrollbarColor: "rgba(255,255,255,0.12) transparent",
