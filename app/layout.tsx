@@ -10,9 +10,8 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Jexlin — A World by Hemang",
-  description:
-    "AI experiments by Hemang. Product designer at Zepto.",
+  title: "Jexlin — A World by Hemang Wason",
+  description: "AI experiments by Hemang Wason. Product designer at Zepto.",
 };
 
 export default function RootLayout({

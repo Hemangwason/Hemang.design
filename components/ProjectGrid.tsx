@@ -24,6 +24,7 @@ export default function ProjectGrid() {
             key={project.id}
             project={project}
             onClick={() => setSelected(project)}
+            videoPaused={selected !== null}
           />
         ))}
       </div>

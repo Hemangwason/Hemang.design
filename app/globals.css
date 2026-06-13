@@ -50,20 +50,19 @@ body {
   }
 }
 
-/* Mobile horizontal card scroll */
-@media (max-width: 640px) {
+/* Mobile: single column */
+@media (max-width: 639px) {
   .projects-grid {
-    display: flex !important;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 8px;
+    grid-template-columns: 1fr !important;
     gap: 12px !important;
   }
+}
 
-  .projects-grid > article {
-    flex: 0 0 82%;
-    scroll-snap-align: start;
+/* Tablet: two columns */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 14px !important;
   }
 }
 

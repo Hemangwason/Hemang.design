@@ -1,22 +1,22 @@
 "use client";
 
-import { Instagram, Twitter, Linkedin, Copy, Check } from "lucide-react";
-import { useState } from "react";
+import { Instagram, Twitter, Linkedin, Copy, Check, ExternalLink, Menu, X } from "lucide-react";
+import { useEffect, useState } from "react";
 import CharacterDeck from "./CharacterDeck";
 
 const EMAIL = "hemangwason@gmail.com";
 
 const socials = [
-  { icon: Instagram, label: "Instagram", href: "https://instagram.com" },
-  { icon: Twitter, label: "Twitter", href: "https://twitter.com" },
-  { icon: Linkedin, label: "LinkedIn", href: "https://linkedin.com" },
+  { icon: Instagram, label: "Instagram", href: "https://instagram.com/hemangwason" },
+  { icon: Twitter, label: "Twitter", href: "https://twitter.com/hemangwason" },
+  { icon: Linkedin, label: "LinkedIn", href: "https://linkedin.com/in/hemangwason" },
 ];
 
 interface Props {
   open: boolean;
 }
 
-export default function Sidebar({ open }: Props) {
+function SidebarContent({ onClose }: { onClose?: () => void }) {
   const [copied, setCopied] = useState(false);
 
   const copyEmail = () => {
@@ -26,8 +26,218 @@ export default function Sidebar({ open }: Props) {
   };
 
   return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
+        padding: "28px 28px 28px",
+        overflowY: "auto",
+        overflowX: "hidden",
+      }}
+    >
+      {/* Mobile close button */}
+      {onClose && (
+        <button
+          onClick={onClose}
+          aria-label="Close menu"
+          style={{
+            alignSelf: "flex-end",
+            marginBottom: 16,
+            width: 36,
+            height: 36,
+            borderRadius: "50%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: "rgba(26,25,23,0.06)",
+            border: "1px solid rgba(26,25,23,0.10)",
+            cursor: "pointer",
+            color: "var(--text)",
+          }}
+        >
+          <X size={15} strokeWidth={2} />
+        </button>
+      )}
+
+      {/* Header */}
+      <div style={{ marginBottom: 24 }}>
+        <p
+          style={{
+            fontSize: 10,
+            letterSpacing: "0.16em",
+            textTransform: "uppercase",
+            color: "var(--text-3)",
+            marginBottom: 6,
+          }}
+        >
+          A word by{" "}
+          <span
+            className="font-poppins"
+            style={{ fontWeight: 700, color: "var(--text)", letterSpacing: "0.12em" }}
+          >
+            Hemang Wason
+          </span>
+        </p>
+        <h1
+          className="font-poppins"
+          style={{
+            fontWeight: 700,
+            fontSize: 22,
+            lineHeight: 1.15,
+            color: "var(--text)",
+            letterSpacing: "-0.03em",
+          }}
+        >
+          Jexlin
+        </h1>
+      </div>
+
+      {/* What this is + stack — single paragraph */}
+      <p style={{ fontSize: 13, lineHeight: 1.85, color: "var(--text-2)", marginBottom: 24 }}>
+        This isn't my portfolio — it's a live log of what happens when a product designer points a
+        full AI stack at a blank canvas and ships. Built with{" "}
+        <strong style={{ color: "var(--text)", fontWeight: 600 }}>Claude</strong>,{" "}
+        <strong style={{ color: "var(--text)", fontWeight: 600 }}>Antigravity</strong>,{" "}
+        <strong style={{ color: "var(--text)", fontWeight: 600 }}>Cursor</strong>, and{" "}
+        <strong style={{ color: "var(--text)", fontWeight: 600 }}>Claude Code</strong> — from blank
+        canvas to shipped in a single session.
+      </p>
+
+      {/* Portfolio link — highlighted */}
+      <a
+        href="https://www.hemangwason.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "14px 18px",
+          borderRadius: 14,
+          background: "rgba(26,25,23,0.88)",
+          color: "#f0ece6",
+          textDecoration: "none",
+          marginBottom: 24,
+          boxShadow: "0 4px 20px rgba(26,25,23,0.14), inset 0 1px 0 rgba(255,255,255,0.06)",
+          transition: "background 0.15s ease, box-shadow 0.15s ease",
+        }}
+        onMouseEnter={(e) => {
+          const el = e.currentTarget as HTMLElement;
+          el.style.background = "rgba(26,25,23,1)";
+          el.style.boxShadow = "0 6px 28px rgba(26,25,23,0.22), inset 0 1px 0 rgba(255,255,255,0.06)";
+        }}
+        onMouseLeave={(e) => {
+          const el = e.currentTarget as HTMLElement;
+          el.style.background = "rgba(26,25,23,0.88)";
+          el.style.boxShadow = "0 4px 20px rgba(26,25,23,0.14), inset 0 1px 0 rgba(255,255,255,0.06)";
+        }}
+      >
+        <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
+          <span
+            className="font-poppins"
+            style={{ fontSize: 15, fontWeight: 700, letterSpacing: "-0.02em", color: "#f0ece6" }}
+          >
+            See my portfolio
+          </span>
+          <span style={{ fontSize: 11, letterSpacing: "0.04em", color: "rgba(240,236,230,0.42)" }}>
+            hemangwason.com
+          </span>
+        </div>
+        <ExternalLink size={13} strokeWidth={1.7} style={{ opacity: 0.4, color: "#f0ece6" }} />
+      </a>
+
+      {/* Social links — equal-width row */}
+      <div style={{ display: "flex", gap: 7, marginBottom: 28 }}>
+        {socials.map(({ icon: Icon, label, href }) => (
+          <a
+            key={label}
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              flex: 1,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 7,
+              padding: "9px 8px",
+              borderRadius: 100,
+              background: "rgba(255,255,255,0.55)",
+              backdropFilter: "blur(14px)",
+              WebkitBackdropFilter: "blur(14px)",
+              border: "1px solid rgba(0,0,0,0.07)",
+              boxShadow: "0 1px 4px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.7)",
+              fontSize: 12,
+              fontWeight: 500,
+              color: "var(--text)",
+              textDecoration: "none",
+              transition: "box-shadow 0.15s ease, transform 0.15s ease",
+              whiteSpace: "nowrap",
+            }}
+            onMouseEnter={(e) => {
+              const el = e.currentTarget as HTMLElement;
+              el.style.transform = "translateY(-1px)";
+              el.style.boxShadow = "0 4px 12px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.7)";
+            }}
+            onMouseLeave={(e) => {
+              const el = e.currentTarget as HTMLElement;
+              el.style.transform = "none";
+              el.style.boxShadow = "0 1px 4px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.7)";
+            }}
+          >
+            <Icon size={13} strokeWidth={1.7} />
+            <span>{label}</span>
+          </a>
+        ))}
+      </div>
+
+      {/* Character deck — sits naturally after socials, no flex growth */}
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginTop: 24, paddingBottom: 8 }}>
+        <CharacterDeck />
+      </div>
+
+      {/* Email — pinned to bottom via auto margin */}
+      <button
+        onClick={copyEmail}
+        style={{
+          marginTop: "auto",
+          paddingTop: 20,
+          display: "flex",
+          alignItems: "center",
+          gap: 7,
+          cursor: "pointer",
+          width: "fit-content",
+          background: "none",
+          border: "none",
+          padding: 0,
+        }}
+      >
+        <span style={{ fontSize: 11, color: "var(--text-3)" }}>{EMAIL}</span>
+        {copied
+          ? <Check size={10} strokeWidth={2} style={{ color: "var(--text-3)" }} />
+          : <Copy size={10} strokeWidth={1.8} style={{ color: "var(--text-3)" }} />}
+      </button>
+    </div>
+  );
+}
+
+export default function Sidebar({ open }: Props) {
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  // Lock body scroll when mobile drawer is open
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [mobileOpen]);
+
+  return (
     <>
-      {/* Desktop sidebar — fixed, collapsible */}
+      {/* ── Desktop sidebar ────────────────────────────── */}
       <aside
         className="hidden lg:block"
         style={{
@@ -35,15 +245,13 @@ export default function Sidebar({ open }: Props) {
           left: 0,
           top: 0,
           bottom: 0,
-          width: open ? 360 : 52,
-          transition: "width 0.4s cubic-bezier(0.23, 1, 0.32, 1)",
-          overflow: "hidden",
-          background: "var(--bg)",
-          borderRight: "1px solid rgba(26,25,23,0.07)",
+          width: open ? 340 : 52,
+          transition: "width 0.38s cubic-bezier(0.23, 1, 0.32, 1)",
           zIndex: 50,
+          overflow: "visible",
         }}
       >
-        {/* Collapsed pill label */}
+        {/* Collapsed vertical label */}
         <div
           style={{
             position: "absolute",
@@ -51,167 +259,126 @@ export default function Sidebar({ open }: Props) {
             left: "50%",
             transform: "translate(-50%, -50%)",
             opacity: open ? 0 : 0.2,
-            transition: "opacity 0.25s ease",
+            transition: "opacity 0.2s ease",
             pointerEvents: "none",
             writingMode: "vertical-rl",
             textOrientation: "mixed",
-            fontSize: 10,
+            fontSize: 9,
             fontWeight: 700,
-            letterSpacing: "0.2em",
+            letterSpacing: "0.22em",
             color: "var(--text)",
           }}
           className="font-poppins"
         >
-          JEXLIN
+          HEMANG WASON
         </div>
 
-        {/* Full content */}
+        {/* Sliding panel */}
         <div
           style={{
-            opacity: open ? 1 : 0,
-            pointerEvents: open ? "auto" : "none",
-            transition: "opacity 0.18s ease",
-            display: "flex",
-            flexDirection: "column",
-            height: "100%",
-            padding: "28px 40px 36px",
-            minWidth: 360,
-            overflowY: "auto",
+            position: "absolute",
+            left: 0,
+            top: 0,
+            bottom: 0,
+            width: 340,
+            transform: open ? "translateX(0)" : "translateX(-340px)",
+            transition: "transform 0.38s cubic-bezier(0.23, 1, 0.32, 1)",
+            background: "var(--bg)",
+            borderRight: "1px solid rgba(26,25,23,0.07)",
           }}
         >
-          {/* Brand */}
-          <div style={{ marginBottom: 32 }}>
-            <h1
-              className="font-poppins"
-              style={{ fontWeight: 600, fontSize: 17, lineHeight: 1.3, color: "var(--text)" }}
-            >
-              Jexlin
-            </h1>
-            <p style={{ fontSize: 13, marginTop: 2, color: "var(--text-2)" }}>
-              A World by Hemang
-            </p>
-          </div>
-
-          {/* Bio */}
-          <div style={{ marginBottom: 32 }}>
-            <p
-              style={{ fontSize: 13, lineHeight: 1.8, color: "var(--text-2)", marginBottom: 10 }}
-            >
-              Product designer building things at{" "}
-              <span style={{ color: "var(--text)" }}>Zepto</span>. Previously{" "}
-              <span style={{ color: "var(--text)" }}>Zomato</span>.
-            </p>
-            <p style={{ fontSize: 13, lineHeight: 1.8, color: "var(--text-2)" }}>
-              Five things that escaped my notebook and got built anyway.
-            </p>
-          </div>
-
-          {/* Social links */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 40 }}>
-            {socials.map(({ icon: Icon, label, href }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="glass"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 10,
-                  width: "fit-content",
-                  padding: "8px 16px",
-                  borderRadius: 100,
-                  fontSize: 13,
-                  color: "var(--text)",
-                  textDecoration: "none",
-                  transition: "transform 0.2s ease",
-                }}
-                onMouseEnter={(e) =>
-                  ((e.currentTarget as HTMLElement).style.transform = "translateY(-2px)")
-                }
-                onMouseLeave={(e) =>
-                  ((e.currentTarget as HTMLElement).style.transform = "none")
-                }
-              >
-                <Icon size={14} strokeWidth={1.8} />
-                <span>{label}</span>
-              </a>
-            ))}
-          </div>
-
-          {/* Character deck — pushed toward bottom */}
-          <div style={{ flex: 1, display: "flex", alignItems: "flex-end", justifyContent: "center", paddingBottom: 28 }}>
-            <CharacterDeck />
-          </div>
-
-          {/* Email */}
-          <button
-            onClick={copyEmail}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 8,
-              cursor: "pointer",
-              width: "fit-content",
-              marginTop: 16,
-            }}
-          >
-            <span style={{ fontSize: 12, color: "var(--text-3)" }}>{EMAIL}</span>
-            <span style={{ color: "var(--text-3)" }}>
-              {copied ? <Check size={11} strokeWidth={2} /> : <Copy size={11} strokeWidth={1.8} />}
-            </span>
-          </button>
+          <SidebarContent />
         </div>
       </aside>
 
-      {/* Mobile header */}
-      <header className="lg:hidden px-6 pt-8 pb-6">
-        <h1
-          className="font-poppins"
-          style={{ fontWeight: 600, fontSize: 17, color: "var(--text)" }}
-        >
-          Jexlin
-        </h1>
-        <p style={{ fontSize: 12, marginTop: 2, color: "var(--text-2)" }}>
-          A World by Hemang
-        </p>
-        <p
+      {/* ── Mobile top bar ─────────────────────────────── */}
+      <header
+        className="lg:hidden flex items-center justify-between"
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 90,
+          height: 56,
+          padding: "0 20px",
+          background: "rgba(240,236,230,0.90)",
+          backdropFilter: "blur(20px) saturate(180%)",
+          WebkitBackdropFilter: "blur(20px) saturate(180%)",
+          borderBottom: "1px solid rgba(26,25,23,0.07)",
+        }}
+      >
+        <div>
+          <p style={{ fontSize: 9, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--text-3)", marginBottom: 1 }}>
+            A word by{" "}
+            <span className="font-poppins" style={{ fontWeight: 700, color: "var(--text)", letterSpacing: "0.10em" }}>
+              Hemang Wason
+            </span>
+          </p>
+          <h1
+            className="font-poppins"
+            style={{ fontWeight: 700, fontSize: 16, color: "var(--text)", letterSpacing: "-0.02em", lineHeight: 1 }}
+          >
+            Jexlin
+          </h1>
+        </div>
+
+        <button
+          onClick={() => setMobileOpen(true)}
+          aria-label="Open menu"
           style={{
-            fontSize: 12,
-            marginTop: 14,
-            lineHeight: 1.65,
-            maxWidth: 320,
-            color: "var(--text-2)",
+            width: 40,
+            height: 40,
+            borderRadius: 12,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: "rgba(26,25,23,0.06)",
+            border: "1px solid rgba(26,25,23,0.10)",
+            cursor: "pointer",
+            color: "var(--text)",
           }}
         >
-          Product designer at Zepto. Five things built because they had to exist.
-        </p>
-        <div style={{ display: "flex", gap: 10, marginTop: 18, flexWrap: "wrap" }}>
-          {socials.map(({ icon: Icon, label, href }) => (
-            <a
-              key={label}
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="glass"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 7,
-                padding: "7px 14px",
-                borderRadius: 100,
-                fontSize: 12,
-                color: "var(--text)",
-                textDecoration: "none",
-              }}
-            >
-              <Icon size={13} strokeWidth={1.8} />
-              <span>{label}</span>
-            </a>
-          ))}
-        </div>
+          <Menu size={17} strokeWidth={1.8} />
+        </button>
       </header>
+
+      {/* ── Mobile drawer overlay ───────────────────────── */}
+      <div
+        className="lg:hidden"
+        onClick={() => setMobileOpen(false)}
+        style={{
+          position: "fixed",
+          inset: 0,
+          zIndex: 95,
+          background: "rgba(10,9,8,0.45)",
+          backdropFilter: "blur(4px)",
+          WebkitBackdropFilter: "blur(4px)",
+          opacity: mobileOpen ? 1 : 0,
+          pointerEvents: mobileOpen ? "auto" : "none",
+          transition: "opacity 0.3s ease",
+        }}
+      />
+
+      {/* ── Mobile drawer panel ──────────────────────────── */}
+      <div
+        className="lg:hidden"
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          bottom: 0,
+          width: "min(300px, 86vw)",
+          zIndex: 96,
+          background: "var(--bg)",
+          borderRight: "1px solid rgba(26,25,23,0.08)",
+          boxShadow: "4px 0 40px rgba(0,0,0,0.12)",
+          transform: mobileOpen ? "translateX(0)" : "translateX(-110%)",
+          transition: "transform 0.38s cubic-bezier(0.23, 1, 0.32, 1)",
+        }}
+      >
+        <SidebarContent onClose={() => setMobileOpen(false)} />
+      </div>
     </>
   );
 }
